@@ -22,3 +22,12 @@ App/Views/Home/index.php
 
 ## Call your Controller <h2> 
 ![img](https://puu.sh/zQy9w/e8c273d1f4.png)
+
+## Use MySql <h2> 
+Set up your configuration in App/Model/SPDO.php
+
+![img](https://puu.sh/zQAeQ/a8fd7848e9.png)
+
+Call staticly your SPDO object on your repository/controller
+
+![img](https://puu.sh/zQAjc/2aeea4e66b.png)
