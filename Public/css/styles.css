@@ -1,0 +1,37 @@
+.center {
+    text-align: center;
+}
+.blue {
+    color : #204d74;
+}
+.red {
+    color : #ac2925;
+}
+.green {
+    color : #449d44;
+}
+.bold {
+    font-weight: bold;
+}
+/*RECHERCHE*/
+.glyphicon.glyphicon-heart.active {
+    color : #ac2925;
+}
+.glyphicon.glyphicon-user.active {
+    color : #ffcd0e;
+}
+.hover-fav {
+    float: right;
+}
+.hover-fav:hover {
+    font-size: 1.05em;
+    text-shadow: 0px 0px 10px rgb(158, 200, 212);
+}
+.hover-grp {
+    float: right;
+}
+.hover-grp:hover {
+    font-size: 1.05em;
+    text-shadow: 0px 0px 10px rgb(158, 200, 212);
+}
+
