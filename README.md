@@ -11,6 +11,5 @@ define('PATH', 'http://localhost/test');
 ```
 
 ## Use controller <h2> 
-```
-![Image of Yaktocat](https://puu.sh/zQxQw/f346eaacfe.png)
-```
+![img](https://puu.sh/zQxQw/f346eaacfe.png)
+
