@@ -1,5 +1,7 @@
 # FrameworkValou
 Framework Mouli
+Simple PHP MVC Framework, using MySql/Doctrine/Namespace/Templates
+Check documentation bellow
 
 # How to use <h1>
 
