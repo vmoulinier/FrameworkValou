@@ -31,3 +31,12 @@ Set up your configuration in App/Model/SPDO.php
 Call staticly your SPDO object on your repository/controller
 
 ![img](https://puu.sh/zQAjc/2aeea4e66b.png)
+
+## Use Doctrine <h2> 
+Set up your configuration in Core/Controller/DoctrineORM.php
+
+![img](https://puu.sh/zQAAx/de5921d231.png)
+
+Create your object Doctrine 
+
+![img](https://puu.sh/zQACS/87829681f7.png)
