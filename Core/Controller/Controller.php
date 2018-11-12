@@ -2,7 +2,6 @@
 
 namespace Core\Controller;
 require_once "vendor/autoload.php";
-require_once "Core/API/api-allocine-helper.php";
 
 use App\Model\Repository;
 
@@ -11,14 +10,12 @@ class Controller extends DoctrineORM {
     protected $path;
     protected $template;
     protected $repository;
-    protected $helper;
 
     /**
      * Controller constructor.
      */
     public function __construct(){
         parent::__construct();
-        $this->helper = new \AlloHelper();
         $this->path = 'App/Views/';
         $this->repository = new Repository();
     }
