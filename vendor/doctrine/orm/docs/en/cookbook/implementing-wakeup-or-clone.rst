@@ -4,15 +4,15 @@ Implementing Wakeup or Clone
 .. sectionauthor:: Roman Borschel (roman@code-factory.org)
 
 As explained in the
-`restrictions for entity classes in the manual <http://www.doctrine-project.org/documentation/manual/2_0/en/architecture#entities>`_,
+`restrictions for entity classes in the manual <http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/architecture.html#entities>`_,
 it is usually not allowed for an entity to implement ``__wakeup``
 or ``__clone``, because Doctrine makes special use of them.
 However, it is quite easy to make use of these methods in a safe
 way by guarding the custom wakeup or clone code with an entity
 identity check, as demonstrated in the following sections.
 
-Safely implementing \_\_wakeup
-------------------------------
+Safely implementing __wakeup
+----------------------------
 
 To safely implement ``__wakeup``, simply enclose your
 implementation code in an identity check as follows:
@@ -37,8 +37,8 @@ implementation code in an identity check as follows:
         //...
     }
 
-Safely implementing \_\_clone
------------------------------
+Safely implementing __clone
+---------------------------
 
 Safely implementing ``__clone`` is pretty much the same:
 

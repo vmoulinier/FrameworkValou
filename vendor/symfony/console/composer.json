@@ -16,27 +16,34 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
+        "php": "^7.2.5",
         "symfony/polyfill-mbstring": "~1.0",
-        "symfony/debug": "~2.8|~3.0"
+        "symfony/polyfill-php73": "^1.8",
+        "symfony/service-contracts": "^1.1|^2"
     },
     "require-dev": {
-        "symfony/config": "~3.3",
-        "symfony/http-kernel": "~2.8|~3.0",
-        "symfony/event-dispatcher": "~2.8|~3.0",
-        "symfony/dependency-injection": "~3.3",
-        "symfony/filesystem": "~2.8|~3.0",
-        "symfony/process": "~2.8|~3.0",
+        "symfony/config": "^4.4|^5.0",
+        "symfony/event-dispatcher": "^4.4|^5.0",
+        "symfony/dependency-injection": "^4.4|^5.0",
+        "symfony/lock": "^4.4|^5.0",
+        "symfony/process": "^4.4|^5.0",
+        "symfony/var-dumper": "^4.4|^5.0",
         "psr/log": "~1.0"
+    },
+    "provide": {
+        "psr/log-implementation": "1.0"
     },
     "suggest": {
         "symfony/event-dispatcher": "",
-        "symfony/filesystem": "",
+        "symfony/lock": "",
         "symfony/process": "",
         "psr/log": "For using the console logger"
     },
     "conflict": {
-        "symfony/dependency-injection": "<3.3"
+        "symfony/dependency-injection": "<4.4",
+        "symfony/event-dispatcher": "<4.4",
+        "symfony/lock": "<4.4",
+        "symfony/process": "<4.4"
     },
     "autoload": {
         "psr-4": { "Symfony\\Component\\Console\\": "" },
@@ -47,7 +54,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.3-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }

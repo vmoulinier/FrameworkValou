@@ -1,5 +1,6 @@
 {
     "require": {
-        "doctrine/orm": "*"
+        "doctrine/orm": "*",
+        "mailjet/mailjet-apiv3-php": "^1.4"
     }
 }

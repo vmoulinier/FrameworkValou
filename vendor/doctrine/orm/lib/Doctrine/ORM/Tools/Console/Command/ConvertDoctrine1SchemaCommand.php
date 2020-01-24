@@ -19,15 +19,15 @@
 
 namespace Doctrine\ORM\Tools\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console;
-use Doctrine\ORM\Tools\Export\ClassMetadataExporter;
 use Doctrine\ORM\Tools\ConvertDoctrine1Schema;
 use Doctrine\ORM\Tools\EntityGenerator;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputInterface;
+use Doctrine\ORM\Tools\Export\ClassMetadataExporter;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to convert a Doctrine 1 schema to a Doctrine 2 mapping file.
@@ -38,6 +38,8 @@ use Symfony\Component\Console\Command\Command;
  * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author  Jonathan Wage <jonwage@gmail.com>
  * @author  Roman Borschel <roman@code-factory.org>
+ *
+ * @deprecated 2.7 This class is being removed from the ORM and won't have any replacement
  */
 class ConvertDoctrine1SchemaCommand extends Command
 {
@@ -100,39 +102,16 @@ class ConvertDoctrine1SchemaCommand extends Command
      */
     protected function configure()
     {
-        $this
-        ->setName('orm:convert-d1-schema')
-        ->setAliases(array('orm:convert:d1-schema'))
-        ->setDescription('Converts Doctrine 1.X schema into a Doctrine 2.X schema.')
-        ->setDefinition(array(
-            new InputArgument(
-                'from-path', InputArgument::REQUIRED, 'The path of Doctrine 1.X schema information.'
-            ),
-            new InputArgument(
-                'to-type', InputArgument::REQUIRED, 'The destination Doctrine 2.X mapping type.'
-            ),
-            new InputArgument(
-                'dest-path', InputArgument::REQUIRED,
-                'The path to generate your Doctrine 2.X mapping information.'
-            ),
-            new InputOption(
-                'from', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Optional paths of Doctrine 1.X schema information.',
-                array()
-            ),
-            new InputOption(
-                'extend', null, InputOption::VALUE_OPTIONAL,
-                'Defines a base class to be extended by generated entity classes.'
-            ),
-            new InputOption(
-                'num-spaces', null, InputOption::VALUE_OPTIONAL,
-                'Defines the number of indentation spaces', 4
-            )
-        ))
-        ->setHelp(<<<EOT
-Converts Doctrine 1.X schema into a Doctrine 2.X schema.
-EOT
-        );
+        $this->setName('orm:convert-d1-schema')
+             ->setAliases(['orm:convert:d1-schema'])
+             ->setDescription('Converts Doctrine 1.x schema into a Doctrine 2.x schema')
+             ->addArgument('from-path', InputArgument::REQUIRED, 'The path of Doctrine 1.X schema information.')
+             ->addArgument('to-type', InputArgument::REQUIRED, 'The destination Doctrine 2.X mapping type.')
+             ->addArgument('dest-path', InputArgument::REQUIRED, 'The path to generate your Doctrine 2.X mapping information.')
+             ->addOption('from', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Optional paths of Doctrine 1.X schema information.', [])
+             ->addOption('extend', null, InputOption::VALUE_OPTIONAL, 'Defines a base class to be extended by generated entity classes.')
+             ->addOption('num-spaces', null, InputOption::VALUE_OPTIONAL, 'Defines the number of indentation spaces', 4)
+             ->setHelp('Converts Doctrine 1.x schema into a Doctrine 2.x schema.');
     }
 
     /**
@@ -140,8 +119,11 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $ui = new SymfonyStyle($input, $output);
+        $ui->warning('Command ' . $this->getName() . ' is deprecated and will be removed in Doctrine ORM 3.0.');
+
         // Process source directories
-        $fromPaths = array_merge(array($input->getArgument('from-path')), $input->getOption('from'));
+        $fromPaths = array_merge([$input->getArgument('from-path')], $input->getOption('from'));
 
         // Process destination directory
         $destPath = realpath($input->getArgument('dest-path'));
@@ -151,6 +133,8 @@ EOT
         $numSpaces = $input->getOption('num-spaces');
 
         $this->convertDoctrine1Schema($fromPaths, $destPath, $toType, $numSpaces, $extend, $output);
+
+        return 0;
     }
 
     /**

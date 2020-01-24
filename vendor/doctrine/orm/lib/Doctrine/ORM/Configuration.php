@@ -25,9 +25,11 @@ use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache as CacheDriver;
+use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\Common\Proxy\AbstractProxyFactory;
 use Doctrine\ORM\Cache\CacheConfiguration;
-use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Doctrine\ORM\Mapping\DefaultEntityListenerResolver;
 use Doctrine\ORM\Mapping\DefaultNamingStrategy;
 use Doctrine\ORM\Mapping\DefaultQuoteStrategy;
@@ -68,6 +70,9 @@ class Configuration extends \Doctrine\DBAL\Configuration
      * Gets the directory where Doctrine generates any necessary proxy class files.
      *
      * @return string|null
+     *
+     * @deprecated 2.7 We're switch to `ocramius/proxy-manager` and this method isn't applicable any longer
+     * @see https://github.com/Ocramius/ProxyManager
      */
     public function getProxyDir()
     {
@@ -80,6 +85,9 @@ class Configuration extends \Doctrine\DBAL\Configuration
      * Gets the strategy for automatically generating proxy classes.
      *
      * @return int Possible values are constants of Doctrine\Common\Proxy\AbstractProxyFactory.
+     *
+     * @deprecated 2.7 We're switch to `ocramius/proxy-manager` and this method isn't applicable any longer
+     * @see https://github.com/Ocramius/ProxyManager
      */
     public function getAutoGenerateProxyClasses()
     {
@@ -98,13 +106,16 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function setAutoGenerateProxyClasses($autoGenerate)
     {
-        $this->_attributes['autoGenerateProxyClasses'] = (int)$autoGenerate;
+        $this->_attributes['autoGenerateProxyClasses'] = (int) $autoGenerate;
     }
 
     /**
      * Gets the namespace where proxy classes reside.
      *
      * @return string|null
+     *
+     * @deprecated 2.7 We're switch to `ocramius/proxy-manager` and this method isn't applicable any longer
+     * @see https://github.com/Ocramius/ProxyManager
      */
     public function getProxyNamespace()
     {
@@ -149,7 +160,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
      *
      * @return AnnotationDriver
      */
-    public function newDefaultAnnotationDriver($paths = array(), $useSimpleAnnotationReader = true)
+    public function newDefaultAnnotationDriver($paths = [], $useSimpleAnnotationReader = true)
     {
         AnnotationRegistry::registerFile(__DIR__ . '/Mapping/Driver/DoctrineAnnotations.php');
 
@@ -349,7 +360,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function addNamedNativeQuery($name, $sql, Query\ResultSetMapping $rsm)
     {
-        $this->_attributes['namedNativeQueries'][$name] = array($sql, $rsm);
+        $this->_attributes['namedNativeQueries'][$name] = [$sql, $rsm];
     }
 
     /**
@@ -418,15 +429,9 @@ class Configuration extends \Doctrine\DBAL\Configuration
      * @param string|callable $className Class name or a callable that returns the function.
      *
      * @return void
-     *
-     * @throws ORMException
      */
     public function addCustomStringFunction($name, $className)
     {
-        if (Query\Parser::isInternalFunction($name)) {
-            throw ORMException::overwriteInternalDQLFunctionNotAllowed($name);
-        }
-
         $this->_attributes['customStringFunctions'][strtolower($name)] = $className;
     }
 
@@ -476,15 +481,9 @@ class Configuration extends \Doctrine\DBAL\Configuration
      * @param string|callable $className Class name or a callable that returns the function.
      *
      * @return void
-     *
-     * @throws ORMException
      */
     public function addCustomNumericFunction($name, $className)
     {
-        if (Query\Parser::isInternalFunction($name)) {
-            throw ORMException::overwriteInternalDQLFunctionNotAllowed($name);
-        }
-
         $this->_attributes['customNumericFunctions'][strtolower($name)] = $className;
     }
 
@@ -534,15 +533,9 @@ class Configuration extends \Doctrine\DBAL\Configuration
      * @param string|callable $className Class name or a callable that returns the function.
      *
      * @return void
-     *
-     * @throws ORMException
      */
     public function addCustomDatetimeFunction($name, $className)
     {
-        if (Query\Parser::isInternalFunction($name)) {
-            throw ORMException::overwriteInternalDQLFunctionNotAllowed($name);
-        }
-
         $this->_attributes['customDatetimeFunctions'][strtolower($name)] = $className;
     }
 
@@ -590,7 +583,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function setCustomHydrationModes($modes)
     {
-        $this->_attributes['customHydrationModes'] = array();
+        $this->_attributes['customHydrationModes'] = [];
 
         foreach ($modes as $modeName => $hydrator) {
             $this->addCustomHydrationMode($modeName, $hydrator);
@@ -642,7 +635,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
     public function getClassMetadataFactoryName()
     {
         if ( ! isset($this->_attributes['classMetadataFactoryName'])) {
-            $this->_attributes['classMetadataFactoryName'] = 'Doctrine\ORM\Mapping\ClassMetadataFactory';
+            $this->_attributes['classMetadataFactoryName'] = ClassMetadataFactory::class;
         }
 
         return $this->_attributes['classMetadataFactoryName'];
@@ -664,7 +657,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
      *
      * @param string $name The name of the filter.
      *
-     * @return string The class name of the filter, or null of it is not
+     * @return string The class name of the filter, or null if it is not
      *  defined.
      */
     public function getFilterClassName($name)
@@ -689,7 +682,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
     {
         $reflectionClass = new \ReflectionClass($className);
 
-        if ( ! $reflectionClass->implementsInterface('Doctrine\Common\Persistence\ObjectRepository')) {
+        if ( ! $reflectionClass->implementsInterface(ObjectRepository::class)) {
             throw ORMException::invalidEntityRepository($className);
         }
 
@@ -707,7 +700,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
     {
         return isset($this->_attributes['defaultRepositoryClassName'])
             ? $this->_attributes['defaultRepositoryClassName']
-            : 'Doctrine\ORM\EntityRepository';
+            : EntityRepository::class;
     }
 
     /**
@@ -881,7 +874,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function getDefaultQueryHints()
     {
-        return isset($this->_attributes['defaultQueryHints']) ? $this->_attributes['defaultQueryHints'] : array();
+        return isset($this->_attributes['defaultQueryHints']) ? $this->_attributes['defaultQueryHints'] : [];
     }
 
     /**

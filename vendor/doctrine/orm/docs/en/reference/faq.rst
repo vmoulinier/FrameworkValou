@@ -21,12 +21,6 @@ created database tables and columns.
 Entity Classes
 --------------
 
-I access a variable and its null, what is wrong?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If this variable is a public variable then you are violating one of the criteria for entities.
-All properties have to be protected or private for the proxy object pattern to work.
-
 How can I add default values to a column?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -203,6 +197,21 @@ Can I sort by a function (for example ORDER BY RAND()) in DQL?
 No, it is not supported to sort by function in DQL. If you need this functionality you should either
 use a native-query or come up with another solution. As a side note: Sorting with ORDER BY RAND() is painfully slow
 starting with 1000 rows.
+
+Is it better to write DQL or to generate it with the query builder?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The purpose of the ``QueryBuilder`` is to generate DQL dynamically,
+which is useful when you have optional filters, conditional joins, etc.
+
+But the ``QueryBuilder`` is not an alternative to DQL, it actually generates DQL
+queries at runtime, which are then interpreted by Doctrine. This means that
+using the ``QueryBuilder`` to build and run a query is actually always slower
+than only running the corresponding DQL query.
+
+So if you only need to generate a query and bind parameters to it,
+you should use plain DQL, as this is a simpler and much more readable solution.
+You should only use the ``QueryBuilder`` when you can't achieve what you want to do with a DQL query.
 
 A Query fails, how can I debug it?
 ----------------------------------

@@ -8,10 +8,7 @@
 
 namespace App\Model;
 
-
-use Core\Controller\DoctrineORM;
-
-class Repository extends DoctrineORM
+class Repository
 {
     public function hydrate($strobject, array $data) {
         $strobject =  '\App\Entity\\'.ucfirst($strobject);

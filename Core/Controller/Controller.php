@@ -4,20 +4,26 @@ namespace Core\Controller;
 require_once "vendor/autoload.php";
 
 use App\Model\Repository;
+use Core\Services\Services;
+use Core\Services\Twig;
+use Mailjet\Client;
 
-class Controller extends DoctrineORM {
+class Controller {
 
     protected $path;
     protected $template;
     protected $repository;
+    protected $services;
+
 
     /**
      * Controller constructor.
      */
     public function __construct(){
-        parent::__construct();
         $this->path = 'App/Views/';
         $this->repository = new Repository();
+        $this->services = new Services();
+        $this->twig = new Twig();
     }
 
 
@@ -38,11 +44,9 @@ class Controller extends DoctrineORM {
     public function getCurrentUser() {
         if(isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
-            $user = $this->entityManager->getRepository('App\Entity\User')->find($id);
-            return $user;
-        } else {
-            return false;
+            return $this->services->getDoctrine()->getRepository('App\Entity\User')->find($id);
         }
+        return false;
     }
 
 }

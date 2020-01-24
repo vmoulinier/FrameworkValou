@@ -152,6 +152,7 @@ The recommended implementations for production are:
 
 
 -  ``Doctrine\Common\Cache\ApcCache``
+-  ``Doctrine\Common\Cache\ApcuCache``
 -  ``Doctrine\Common\Cache\MemcacheCache``
 -  ``Doctrine\Common\Cache\XcacheCache``
 -  ``Doctrine\Common\Cache\RedisCache``
@@ -183,6 +184,7 @@ The recommended implementations for production are:
 
 
 -  ``Doctrine\Common\Cache\ApcCache``
+-  ``Doctrine\Common\Cache\ApcuCache``
 -  ``Doctrine\Common\Cache\MemcacheCache``
 -  ``Doctrine\Common\Cache\XcacheCache``
 -  ``Doctrine\Common\Cache\RedisCache``
@@ -290,7 +292,7 @@ instance of ``Doctrine\DBAL\Connection``. If an array is passed it
 is directly passed along to the DBAL Factory
 ``Doctrine\DBAL\DriverManager::getConnection()``. The DBAL
 configuration is explained in the
-`DBAL section <./../../../../../projects/doctrine-dbal/en/latest/reference/configuration.html>`_.
+`DBAL section <https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html>`_.
 
 Proxy Objects
 -------------
@@ -394,7 +396,7 @@ means that you have to register a special autoloader for these classes:
 .. code-block:: php
 
     <?php
-    use Doctrine\ORM\Proxy\Autoloader;
+    use Doctrine\Common\Proxy\Autoloader;
 
     $proxyDir = "/path/to/proxies";
     $proxyNamespace = "MyProxies";

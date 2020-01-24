@@ -1,13 +1,13 @@
 <?php
 
-use Core\Controller\DoctrineORM;
+use Core\Services\Services;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
 // replace with file to your own project
-require_once 'Core/Controller/DoctrineORM.php';
+require_once 'Core/Services/services.php';
 
-$orm = new DoctrineORM();
-$entityManager = $orm->getEntityManager();
+$services = new Services();
+$entityManager = $services->getDoctrine();
 
 return ConsoleRunner::createHelperSet($entityManager);
 

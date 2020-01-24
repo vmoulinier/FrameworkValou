@@ -19,6 +19,9 @@
 
 namespace Doctrine\ORM\Tools\Export;
 
+use const E_USER_DEPRECATED;
+use function trigger_error;
+
 /**
  * Class used for converting your mapping information between the
  * supported formats: yaml, xml, and php/annotation.
@@ -26,19 +29,26 @@ namespace Doctrine\ORM\Tools\Export;
  * @link    www.doctrine-project.org
  * @since   2.0
  * @author  Jonathan Wage <jonwage@gmail.com>
+ *
+ * @deprecated 2.7 This class is being removed from the ORM and won't have any replacement
  */
 class ClassMetadataExporter
 {
     /**
      * @var array
      */
-    private static $_exporterDrivers = array(
-        'xml' => 'Doctrine\ORM\Tools\Export\Driver\XmlExporter',
-        'yaml' => 'Doctrine\ORM\Tools\Export\Driver\YamlExporter',
-        'yml' => 'Doctrine\ORM\Tools\Export\Driver\YamlExporter',
-        'php' => 'Doctrine\ORM\Tools\Export\Driver\PhpExporter',
-        'annotation' => 'Doctrine\ORM\Tools\Export\Driver\AnnotationExporter'
-    );
+    private static $_exporterDrivers = [
+        'xml' => Driver\XmlExporter::class,
+        'yaml' => Driver\YamlExporter::class,
+        'yml' => Driver\YamlExporter::class,
+        'php' => Driver\PhpExporter::class,
+        'annotation' => Driver\AnnotationExporter::class
+    ];
+
+    public function __construct()
+    {
+        @trigger_error(self::class . ' is deprecated and will be removed in Doctrine ORM 3.0', E_USER_DEPRECATED);
+    }
 
     /**
      * Registers a new exporter driver class under a specified name.

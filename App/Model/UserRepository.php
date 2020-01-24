@@ -11,11 +11,23 @@ namespace App\Model;
 
 use App\Entity\User;
 use Core\Controller\DoctrineORM;
+use Core\Services\Services;
 
-class UserRepository extends DoctrineORM
+class UserRepository
 {
+    public $entityManager;
+
+    /**
+     * UserRepository constructor.
+     */
+    public function __construct()
+    {
+        $this->entityManager = new Services();
+    }
+
+
     public function register($email, $password, $password_verif, $nom, $prenom) {
-        $users = $this->entityManager->getRepository('App\Entity\User')->findOneBy(array('email' => $email));
+        $users = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(array('email' => $email));
         if($users == null) {
 
             if($password === $password_verif) {
@@ -39,7 +51,7 @@ class UserRepository extends DoctrineORM
     }
 
     public function login($email, $password) {
-        $user = $this->entityManager->getRepository('App\Entity\User')->findOneBy(array('email' =>$email, 'password' =>sha1($password)));
+        $user = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(array('email' =>$email, 'password' =>sha1($password)));
         if($user) {
             if($user->getType() == 'ROLE_ADMIN'){
                 $this->saveSessionAdmin($user->getId(), $user->getType());
@@ -89,12 +101,10 @@ class UserRepository extends DoctrineORM
         return false;
     }
 
-    public static function getCurrentUser() {
+    public function getCurrentUser() {
         if(isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
-            $orm = new DoctrineORM();
-            $user = $orm->getEntityManager()->getRepository('App\Entity\User')->find($id);
-            return $user;
+            return $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->find($id);
         } else {
             return false;
         }

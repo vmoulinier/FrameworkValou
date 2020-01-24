@@ -7,9 +7,9 @@
  * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION); HOWEVER CAUSED AND ON ANY
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE); ARISING IN ANY WAY OUT OF THE USE
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
@@ -150,7 +150,7 @@ interface EntityManagerInterface extends ObjectManager
      * @param string $entityName The name of the entity type.
      * @param mixed  $id         The entity identifier.
      *
-     * @return object The entity reference.
+     * @return object|null The entity reference.
      *
      * @throws ORMException
      */
@@ -174,7 +174,7 @@ interface EntityManagerInterface extends ObjectManager
      * @param string $entityName The name of the entity type.
      * @param mixed  $identifier The entity identifier.
      *
-     * @return object The (partial) entity reference.
+     * @return object|null The (partial) entity reference.
      */
     public function getPartialReference($entityName, $identifier);
 
@@ -189,6 +189,8 @@ interface EntityManagerInterface extends ObjectManager
 
     /**
      * Creates a copy of the given entity. Can create a shallow or a deep copy.
+     *
+     * @deprecated 2.7 This method is being removed from the ORM and won't have any replacement
      *
      * @param object  $entity The entity to copy.
      * @param boolean $deep   FALSE for a shallow copy, TRUE for a deep copy.
@@ -249,7 +251,7 @@ interface EntityManagerInterface extends ObjectManager
     *
     * @deprecated
     *
-    * @param int $hydrationMode
+    * @param string|int $hydrationMode
     *
     * @return \Doctrine\ORM\Internal\Hydration\AbstractHydrator
     */
@@ -258,7 +260,7 @@ interface EntityManagerInterface extends ObjectManager
     /**
      * Create a new instance for the given hydration mode.
      *
-     * @param int $hydrationMode
+     * @param string|int $hydrationMode
      *
      * @return \Doctrine\ORM\Internal\Hydration\AbstractHydrator
      *

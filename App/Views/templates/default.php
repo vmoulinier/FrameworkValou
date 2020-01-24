@@ -25,26 +25,20 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <?php if(\App\Model\UserRepository::logged()): ?>
+                    <?php if($this->twig->logged()): ?>
                         <li><a href="<?= PATH ?>/recherche/index">Rechercher</a></li>
-                    <?php endif ?>
-                    <?php if(\App\Model\UserRepository::logged()): ?>
-                        <?php if(\App\Model\UserRepository::getCurrentUser()->getGroupe()): ?>
+                        <?php if($this->getCurrentUser()->getGroupe()): ?>
                             <li><a href="<?= PATH ?>/groupes/index">Groupes</a></li>
                         <?php endif; ?>
-                    <?php endif ?>
-                    <?php if(\App\Model\UserRepository::logged()): ?>
                         <li><a href="<?= PATH ?>/mediatheque/index">Ma médiathèque</a></li>
-                    <?php endif ?>
-                    <?php if(\App\Model\UserRepository::loggedAdmin()): ?>
+                    <?php if($this->twig->loggedAdmin()): ?>
                         <li><a href="<?= PATH ?>/admin/index">Admin</a></li>
                     <?php endif ?>
-                    <?php if(\App\Model\UserRepository::logged()): ?>
                         <li><a href="<?= PATH ?>/user/profil">Profil</a></li>
                     <?php endif ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <?php if(\App\Model\UserRepository::logged()): ?>
+                    <?php if($this->twig->logged()): ?>
                         <li><a href="<?= PATH ?>/user/logout">Deconnexion</a></li>
                     <?php else: ?>
                         <li><a href="<?= PATH ?>/user/register">S'enregistrer</a></li>

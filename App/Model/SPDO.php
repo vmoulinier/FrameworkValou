@@ -9,17 +9,12 @@ class SPDO
 
     private static $instance = null;
 
-    const DEFAULT_SQL_USER = 'root';
-
     const DEFAULT_SQL_HOST = 'localhost';
 
-    const DEFAULT_SQL_PASS = '';
-
-    const DEFAULT_SQL_DTB = 'projetsecu';
 
     private function __construct()
     {
-        $this->PDOInstance = new \PDO('mysql:dbname='.self::DEFAULT_SQL_DTB.';host='.self::DEFAULT_SQL_HOST,self::DEFAULT_SQL_USER ,self::DEFAULT_SQL_PASS);
+        $this->PDOInstance = new \PDO('mysql:dbname='.DB_NAME.';host='.self::DEFAULT_SQL_HOST,DB_USER ,DB_PASS);
         $this->PDOInstance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
