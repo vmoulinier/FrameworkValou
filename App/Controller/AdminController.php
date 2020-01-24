@@ -25,7 +25,8 @@ class AdminController extends Controller
         }
     }
 
-    public function index() {
+    public function index()
+    {
         $this->template = 'default';
         $this->render('admin/index');
     }

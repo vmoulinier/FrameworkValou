@@ -10,7 +10,8 @@ namespace App\Model;
 
 class Repository
 {
-    public function hydrate($strobject, array $data) {
+    public function hydrate($strobject, array $data)
+    {
         $strobject =  '\App\Entity\\'.ucfirst($strobject);
         if(class_exists($strobject)){
             $object = new $strobject();

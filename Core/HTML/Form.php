@@ -8,7 +8,7 @@ class Form{
 
     public $surround = 'p';
 
-    public function __construct($data = array()){
+    public function __construct($data = []){
         $this->data = $data;
     }
     

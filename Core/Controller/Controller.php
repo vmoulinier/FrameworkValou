@@ -27,7 +27,8 @@ class Controller {
     }
 
 
-    protected function render($view, $datas = []){
+    protected function render($view, $datas = [])
+    {
         ob_start();
         extract($datas);
         require($this->path . str_replace('.', '/', $view) . '.php');
@@ -35,18 +36,25 @@ class Controller {
         require($this->path . 'templates/' . $this->template . '.php');
     }
 
-    protected function denied(){
+    protected function denied()
+    {
         $this->template = 'default';
         $this->render('error/404');
         die;
     }
 
-    public function getCurrentUser() {
+    public function getCurrentUser()
+    {
         if(isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
             return $this->services->getDoctrine()->getRepository('App\Entity\User')->find($id);
         }
         return false;
+    }
+
+    public function redirect($path)
+    {
+        header('Location: '.PATH.$path);
     }
 
 }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vmoul
- * Date: 09/03/2017
- * Time: 23:37
- */
 
 namespace App\Controller;
 
@@ -15,7 +9,8 @@ use Core\HTML\TemplateForm;
 
 class UserController extends Controller
 {
-    public function login() {
+    public function login()
+    {
         $this->template = 'default';
         $error = ' ';
         $userrepo = new UserRepository();
@@ -24,7 +19,7 @@ class UserController extends Controller
             $email = $_POST['email'];
             $password = $_POST['password'];
             if($userrepo->login($email, $password)) {
-                header('Location: '.PATH.'/user/profil');
+                $this->redirect('/user/profil');
             }
             else {
                 $error = 'Mauvais mail/mot de passe !';
@@ -32,10 +27,11 @@ class UserController extends Controller
         }
 
         $form = new TemplateForm($_POST);
-        $this->render('user/login', compact('form', 'user', 'error'));
+        $this->render('user/login', compact('form', 'error'));
     }
 
-    public function register() {
+    public function register()
+    {
         $this->template = 'default';
         $userrepo = new UserRepository();;
         $error = ' ';
@@ -57,13 +53,15 @@ class UserController extends Controller
         $this->render('user/register', compact('form', 'error'));
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_destroy();
         unset($_SESSION['user_id']);
-        header('Location: '.PATH.'/home/index');
+        $this->redirect('/home/index');
     }
 
-    public function profil() {
+    public function profil()
+    {
         $this->template = 'default';
         $userrepo = new UserRepository();
         if(!$userrepo->islogged()){
@@ -73,17 +71,5 @@ class UserController extends Controller
         $user = $this->getCurrentUser();
         
         $this->render('user/profil', compact('user'));
-    }
-
-    public function infos() {
-        $id = $_GET['id'];
-        $user = $this->entityManager->getRepository('App\Entity\User')->findOneBy(array('id' => $id));
-        $this->template = 'default';
-        
-        if($user) {
-            $this->render('user/infos', compact('user'));
-        } else {
-            $this->render('error/404');
-        }
     }
 }

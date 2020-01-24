@@ -4,10 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>MyTek</title>
+    <title><?= PROJECT_NAME ?></title>
     <link href="<?= PATH ?>/Public/css/bootstrap.css" rel="stylesheet">
     <link href="<?= PATH ?>/Public/css/styles.css?v=<?=time();?>" rel="stylesheet">
-    <script src="<?= PATH ?>/Public/js/jquery-2.2.4.js"></script>
+    <script src="<?= PATH ?>/Public/js/jquery-3.4.1.js"></script>
     <script src="<?= PATH ?>/Public/js/bootstrap.js"></script>
 </head>
 <body>

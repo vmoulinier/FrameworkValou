@@ -5,7 +5,7 @@ namespace Core;
 class Autoloader
 {
     static function register() {
-        spl_autoload_register(array(__CLASS__, 'autoload'));
+        spl_autoload_register([__CLASS__, 'autoload']);
     }
 
     static function autoload($class) {
