@@ -2,7 +2,9 @@
 
 namespace Core\Services;
 
-class Twig
+use Core\Config;
+
+class Twig extends Config
 {
 
     public function logged(): bool
@@ -21,6 +23,18 @@ class Twig
             }
         }
         return false;
+    }
+
+    public function translation($nom)
+    {
+        $translation = $this->entityManager->getRepository('App\Entity\Translations')->findOneBy(['nom' => $nom]);
+        if ($translation) {
+            $method = 'get' . ucfirst(DEFAULT_LANGAGE);
+            if (method_exists($translation, $method)) {
+                return $translation->$method();
+            }
+        }
+        return $nom;
     }
 
     public function isMobile() {

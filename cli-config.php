@@ -5,6 +5,7 @@ use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
 // replace with file to your own project
 require_once 'Core/Services/Services.php';
+require_once 'env.php';
 
 $services = new Services();
 $entityManager = $services->getDoctrine();

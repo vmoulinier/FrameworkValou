@@ -9,6 +9,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Translations;
+use App\Model\SPDO;
 use App\Model\UserRepository;
 use Core\Controller\Controller;
 
@@ -17,10 +19,9 @@ class AdminController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $userrepo = new UserRepository();
 
         //if is not logged admin, then acces denied
-        if(!$userrepo->isloggedAdmin()){
+        if(!$this->twig->loggedAdmin()){
             $this->denied();
         }
     }
@@ -29,5 +30,38 @@ class AdminController extends Controller
     {
         $this->template = 'default';
         $this->render('admin/index');
+    }
+
+    public function translations()
+    {
+        if(!empty($_POST)) {
+            if(isset($_POST['id'])) {
+                $repo = $this->services->getRepository('translations');
+                $repo->updateTranslation($_POST);
+            }
+            if(isset($_POST['search'])) {
+                $translation = $_POST['search'];
+                $translation = $this->services->getDoctrine()->getRepository('App\Entity\Translations')->findOneBy(['nom' => $translation]);
+                if($translation) {
+                    echo '<td id="nom'.$translation->getId().'">';
+                    echo $translation->getNom();
+                    echo '</td>';
+                    echo '<td id="fr'.$translation->getId().'">';
+                    echo $translation->getFr();
+                    echo '</td>';
+                    echo '<td id="en'.$translation->getId().'">';
+                    echo $translation->getEn();
+                    echo '</td>';
+                    echo '<td>';
+                    echo '<i class="fas fa-search mr-4 pointer" data-toggle="modal" data-target="#translateModal" id="translationId" data-id="'.$translation->getId().'"></i>';
+                    echo '<i class="fas fa-trash red pointer"></i>';
+                    echo '</td>';
+                }
+                die;
+            }
+
+        }
+        $this->template = 'default';
+        $this->render('admin/translations');
     }
 }

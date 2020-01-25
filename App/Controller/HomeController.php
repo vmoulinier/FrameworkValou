@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Test;
 use Core\Controller\Controller;
-use Doctrine\ORM\EntityManager;
-require_once 'Core/Config.php';
 
 class HomeController extends Controller
 {
@@ -26,6 +23,7 @@ class HomeController extends Controller
         //$test->setNom('test');
         //$this->services->getDoctrine()->persist($test);
         //$this->services->getDoctrine()->flush();
+
 
         $this->template = 'default';
         $this->render('home/index');

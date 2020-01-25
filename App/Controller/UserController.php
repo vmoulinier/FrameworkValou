@@ -30,6 +30,21 @@ class UserController extends Controller
         $this->render('user/login', compact('form', 'error'));
     }
 
+    public function loginfb()
+    {
+        if (isset($_GET['login'])) {
+            $profil = $this->services->getProfilFacebook();
+            $userRepo = $this->services->getRepository('user');
+            if ($userRepo->loginfb($profil->getEmail(), $profil->getId())) {
+                $this->redirect('user/profil');
+            }
+            $this->redirect('home/index');
+        }
+
+        $url = $this->services->getUrlLoginFacebook(['email']);
+        header('Location: ' . $url);
+    }
+
     public function register()
     {
         $this->template = 'default';

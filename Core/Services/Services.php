@@ -5,6 +5,8 @@ namespace Core\Services;
 use Core\Config;
 use Mailjet\Resources;
 
+require_once 'Core/Config.php';
+
 class Services extends Config
 {
 
@@ -28,8 +30,39 @@ class Services extends Config
         $this->mailjet->post(Resources::$Email, ['body' => $body]);
     }
 
+    public function getRepository($entity)
+    {
+        if(class_exists('\App\Model\\' . ucfirst($entity) . 'Repository')) {
+            $repository = '\App\Model\\' . ucfirst($entity) . 'Repository';
+            return new $repository();
+        }
+
+        throw new \Error('repository not found');
+    }
+
     public function getDoctrine()
     {
         return $this->entityManager;
     }
+
+    public function getUrlLoginFacebook($scope)
+    {
+        return $this->helper->getLoginUrl(PATH .'/user/loginfb?login=true', $scope);
+    }
+
+    public function getProfilFacebook()
+    {
+        try {
+            $accessToken = $this->helper->getAccessToken();
+            $response = $this->fb->get('/me?fields=email,first_name,last_name,gender', $accessToken->getValue());
+            return $response->getGraphUser();
+        } catch (FacebookResponseException  $e) {
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch(FacebookSDKException $e) {
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
+    }
+
 }

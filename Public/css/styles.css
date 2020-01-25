@@ -34,4 +34,10 @@
     font-size: 1.05em;
     text-shadow: 0px 0px 10px rgb(158, 200, 212);
 }
+.pointer {
+    cursor: pointer;
+}
+.display {
+    display: none;
+}
 

@@ -1,6 +1,8 @@
 {
     "require": {
         "doctrine/orm": "*",
-        "mailjet/mailjet-apiv3-php": "^1.4"
+        "mailjet/mailjet-apiv3-php": "^1.4",
+        "ckeditor/ckeditor": "^4.13",
+        "facebook/graph-sdk": "^5.7"
     }
 }

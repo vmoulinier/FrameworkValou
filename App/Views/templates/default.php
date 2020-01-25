@@ -9,46 +9,36 @@
     <link href="<?= PATH ?>/Public/css/styles.css?v=<?=time();?>" rel="stylesheet">
     <script src="<?= PATH ?>/Public/js/jquery-3.4.1.js"></script>
     <script src="<?= PATH ?>/Public/js/bootstrap.js"></script>
+    <script src="https://kit.fontawesome.com/d92432fce9.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container">
-    <nav class="navbar navbar-default" style="margin-top: 20px">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="<?= PATH ?>/home/index">Accueil</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <?php if($this->twig->logged()): ?>
-                        <li><a href="<?= PATH ?>/recherche/index">Rechercher</a></li>
-                        <?php if($this->getCurrentUser()->getGroupe()): ?>
-                            <li><a href="<?= PATH ?>/groupes/index">Groupes</a></li>
-                        <?php endif; ?>
-                        <li><a href="<?= PATH ?>/mediatheque/index">Ma médiathèque</a></li>
-                    <?php if($this->twig->loggedAdmin()): ?>
-                        <li><a href="<?= PATH ?>/admin/index">Admin</a></li>
-                    <?php endif ?>
-                        <li><a href="<?= PATH ?>/user/profil">Profil</a></li>
-                    <?php endif ?>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <?php if($this->twig->logged()): ?>
-                        <li><a href="<?= PATH ?>/user/logout">Deconnexion</a></li>
-                    <?php else: ?>
-                        <li><a href="<?= PATH ?>/user/register">S'enregistrer</a></li>
-                        <li><a href="<?= PATH ?>/user/login">Connexion</a></li>
-                    <?php endif ?>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <a class="my-0 mr-md-auto font-weight-normal" href="<?= PATH ?>/home/index"><h5>Accueil</h5></a>
+
+    <nav class="my-2 my-md-0 mr-md-3">
+        <?php if($this->twig->logged()): ?>
+            <a class="p-2 text-dark" href="<?= PATH ?>/recherche/index">Rechercher</a>
+            <?php if($this->getCurrentUser()->getGroupe()): ?>
+                <a class="p-2 text-dark" href="<?= PATH ?>/groupes/index">Groupes</a>
+            <?php endif; ?>
+            <a class="p-2 text-dark" href="<?= PATH ?>/mediatheque/index">Ma médiathèque</a>
+            <?php if($this->twig->loggedAdmin()): ?>
+                <a class="p-2 text-dark" href="<?= PATH ?>/admin/index">Admin</a>
+            <?php endif ?>
+            <a class="p-2 text-dark" href="<?= PATH ?>/user/profil">Profil</a>
+        <?php endif ?>
     </nav>
-    <br >
+    <?php if($this->twig->logged()): ?>
+        <a class="btn btn-outline-primary mr-1" href="<?= PATH ?>/user/logout">Deconnexion</a>
+    <?php else: ?>
+        <a class="btn btn-outline-primary mr-1" href="<?= PATH ?>/user/register">S'enregistrer</a>
+        <a class="btn btn-outline-primary mr-1" href="<?= PATH ?>/user/login">Connexion</a>
+    <?php endif ?>
+    <a class="btn btn-outline-primary" href="<?= PATH ?>/admin/translations">Traductions</a>
+</div>
+
+<div class="container">
     <?php echo $content; ?>
 </div>
 </body>

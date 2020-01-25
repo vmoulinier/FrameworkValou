@@ -51,10 +51,23 @@ class UserRepository
             if($user->getType() == 'ROLE_ADMIN'){
                 $this->saveSessionAdmin($user->getId(), $user->getType());
                 return true;
-            } else {
-                $this->saveSession($user->getId());
+            }
+            $this->saveSession($user->getId());
+            return true;
+        }
+        return false;
+    }
+
+    public function loginfb($email, $facebookId): bool
+    {
+        $user = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['email' =>$email, 'facebook_id' => $facebookId]);
+        if($user) {
+            if($user->getType() == 'ROLE_ADMIN'){
+                $this->saveSessionAdmin($user->getId(), $user->getType());
                 return true;
             }
+            $this->saveSession($user->getId());
+            return true;
         }
         return false;
     }
