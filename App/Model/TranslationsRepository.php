@@ -36,6 +36,19 @@ class TranslationsRepository
         $this->entityManager->getDoctrine()->flush();
     }
 
+    public function addTranslation()
+    {
+        $translation = $this->entityManager->getDoctrine()->getRepository('App\Entity\Translations')->findBy(['nom' => $_POST['nom']]);
+        if(!$translation) {
+            $translation = new Translations();
+            $translation->setNom($_POST['nom']);
+            $translation->setFr($_POST['fr']);
+            $translation->setEn($_POST['en']);
+            $this->entityManager->getDoctrine()->persist($translation);
+            $this->entityManager->getDoctrine()->flush();
+        }
+    }
+
     public function findTranslation($name)
     {
         $query = 'SELECT * FROM translations WHERE nom LIKE :name OR fr LIKE :name OR en LIKE :name LIMIT 5';

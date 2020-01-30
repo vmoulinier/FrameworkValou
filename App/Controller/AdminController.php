@@ -41,6 +41,10 @@ class AdminController extends Controller
                 $repo->updateTranslation();
             }
 
+            if(isset($_POST['add'])) {
+                $repo->addTranslation();
+            }
+
             if(isset($_POST['id_delete'])) {
                 $repo->removeTranslation();
             }
