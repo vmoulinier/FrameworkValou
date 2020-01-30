@@ -35,28 +35,21 @@ class AdminController extends Controller
     public function translations()
     {
         if(!empty($_POST)) {
+            $repo = $this->services->getRepository('translations');
+
             if(isset($_POST['id'])) {
-                $repo = $this->services->getRepository('translations');
-                $repo->updateTranslation($_POST);
+                $repo->updateTranslation();
             }
+
+            if(isset($_POST['id_delete'])) {
+                $repo->removeTranslation();
+            }
+
             if(isset($_POST['search'])) {
                 $translation = $_POST['search'];
-                $translation = $this->services->getDoctrine()->getRepository('App\Entity\Translations')->findOneBy(['nom' => $translation]);
-                if($translation) {
-                    echo '<td id="nom'.$translation->getId().'">';
-                    echo $translation->getNom();
-                    echo '</td>';
-                    echo '<td id="fr'.$translation->getId().'">';
-                    echo $translation->getFr();
-                    echo '</td>';
-                    echo '<td id="en'.$translation->getId().'">';
-                    echo $translation->getEn();
-                    echo '</td>';
-                    echo '<td>';
-                    echo '<i class="fas fa-search mr-4 pointer" data-toggle="modal" data-target="#translateModal" id="translationId" data-id="'.$translation->getId().'"></i>';
-                    echo '<i class="fas fa-trash red pointer"></i>';
-                    echo '</td>';
-                }
+                $translations = $repo->findTranslation($translation);
+                $this->template = 'disable';
+                $this->render('admin/translations-data-display', compact('translations'));
                 die;
             }
 
