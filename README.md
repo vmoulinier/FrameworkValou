@@ -185,3 +185,8 @@ Just call staticly the function getInstance() from the class SPDO in **App/Model
     }
 	
 ```
+
+#### Services
+
+The class Services is in **Core/Services/Services.php**
+You can setup your services, and config them is the Config class  **Core/Config.php**
