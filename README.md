@@ -45,13 +45,13 @@ class HomeController extends Controller
 {
     public function index()
     {
-		$str = 'Hello World';
+	$str = 'Hello World';
 		
-		//choose your template. Default template installed in App/views/templates
+	//choose your template. Default template installed in App/views/templates
         $this->template = 'default'; 
 		
-		//choose your rendering view in this case, on App/views/home/index.php
-		//inject variables to your view
+	//choose your rendering view in this case, on App/views/home/index.php
+	//inject variables to your view
         $this->render('home/index', compact('str'));
     }
 }
@@ -82,7 +82,7 @@ Use your funtions in your view like this
 <h1 class="center"><?= $str ?></h1>
 
 <?php if($this->twig->logged()): ?>
-	<p>Logged !</p>
+    <p>Logged !</p>
 <?php endif; ?>
 ```
 
