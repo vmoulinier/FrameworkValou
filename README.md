@@ -108,7 +108,9 @@ Use the translation() function in your view.
 
 You can also use parameters on the translations function. Just add an array with the name of yours parameters.
 
+```php
 <h2 class="center"><?= $this->twig->translation('home.index.title', ['param1' => $str]) ?></h2>
+```
 
 Your trad chain « home.index.title » must contain the value « %param1% » 
 
