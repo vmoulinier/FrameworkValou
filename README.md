@@ -1,44 +1,187 @@
 # FrameworkValou
 Framework Mouli
 Simple PHP MVC Framework, using MySql/Doctrine/Namespace/Templates
+Set up a simple PHP project in less than 2 min
 Check documentation bellow
 
-# How to use <h1>
+[TOC]
 
-## Set up your project <h2> 
+# Installation
+
+Once the project downloaded :
+- install dependency with a composer install
+- configure and rename the **env.php.dist** file
+
+```php
+define('ROOT', dirname(str_replace('\\', '/', __DIR__)));
+define('PROJECT_NAME', 'yourProjectName');
+define('DB_USER', 'root');
+define('DB_PASS', 'DB_PASS');
+define('DB_NAME', 'DB_NAME');
+define('PATH', 'http://localhost/yourProjectName');
+define('MJ_APIKEY_PUBLIC', 'IF YOU USE MAILJET');
+define('MJ_APIKEY_PRIVATE', 'IF YOU USE MAILJET');
+define('MJ_FROM_EMAIL', 'IF YOU USE MAILJET');
+define('MJ_FROM_NAME', 'IF YOU USE MAILJET');
+define('FACEBOOK_APIKEY', 'FACEBOOK API KEY');
+define('FACEBOOK_API_SECRET', 'FACEBOOK API SECRET');
+define('UPLOAD_PATH', ROOT . 'images/upload');
+define('DEFAULT_LANGAGE', 'en');
+
 ```
-index.php
-//define your path project
-define('PATH', 'http://localhost/test');
+
+# How it work
+## Controllers
+### Use your controller
+
+**App/controller/homecontroller.php**
+
+```php
+<?php
+
+namespace App\Controller;
+
+use Core\Controller\Controller;
+
+class HomeController extends Controller
+{
+    public function index()
+    {
+		$str = 'Hello World';
+		
+		//choose your template. Default template installed in App/views/templates
+        $this->template = 'default'; 
+		
+		//choose your rendering view in this case, on App/views/home/index.php
+		//inject variables to your view
+        $this->render('home/index', compact('str'));
+    }
+}
+```
+### Call your controller
+
+![](https://nsa40.casimages.com/img/2020/02/01/200201040150387769.png)
+
+
+## Views
+### Use your view
+**App/views/home/index.php**
+
+```php
+<h1 class="center"><?= $str ?></h1>
+```
+Will display
+
+![](https://nsa40.casimages.com/img/2020/02/01/200201035704116934.png)
+
+### Use and create your front functions
+
+Front functions are located in **Core/Services/Twig.php**
+Use your funtions in your view like this
+
+**App/views/home/index.php**
+```php
+<h1 class="center"><?= $str ?></h1>
+
+<?php if($this->twig->logged()): ?>
+	<p>Logged !</p>
+<?php endif; ?>
 ```
 
-## Use controller <h2> 
-App/Controller/HomeController.php
+### Translations
 
-![img](https://puu.sh/zQxQw/f346eaacfe.png)
+You can use the translation system integrated, available on http://localhost/youproject/admin/translations
 
-## Use your view <h2> 
-App/Views/Home/index.php
+#### Add a translation
 
-![img](https://puu.sh/zQxVk/894ed7fd97.png)
+![](https://nsa40.casimages.com/img/2020/02/01/200201041615826792.png)
 
-## Call your Controller <h2> 
-![img](https://puu.sh/zQy9w/e8c273d1f4.png)
+#### Search and edit a translation
 
-## Use MySql <h2> 
-Set up your configuration in App/Model/SPDO.php
+![](https://nsa40.casimages.com/img/2020/02/01/200201041733370902.png)
 
-![img](https://puu.sh/zQAeQ/a8fd7848e9.png)
+#### Use your translation
 
-Call staticly your SPDO object on your repository/controller
+Use the translation() function in your view.
 
-![img](https://puu.sh/zQAjc/2aeea4e66b.png)
+```php
+<h2 class="center"><?= $this->twig->translation('home.index.title') ?></h2>
+```
 
-## Use Doctrine <h2> 
-Set up your configuration in Core/Controller/DoctrineORM.php
+You can also use parameters on the translations function. Just add an array with the name of yours parameters.
 
-![img](https://puu.sh/zQAAx/de5921d231.png)
+<h2 class="center"><?= $this->twig->translation('home.index.title', ['param1' => $str]) ?></h2>
 
-Create your object Doctrine 
+Your trad chain « home.index.title » must contain the value « %param1% » 
 
-![img](https://puu.sh/zQACS/87829681f7.png)
+#### Configure the langage
+
+Set up the langage english or french in you **env.php**
+You can add your propers langages later.
+
+```php
+define('DEFAULT_LANGAGE', 'en');
+```
+
+## Model
+
+The project is setup to use MySQL and Doctrine
+
+#### Use Doctrine
+
+Doctrine can be called from the class Services in **Core/Services/Services.php**
+
+In a **controller** you just have to
+
+```php
+$this->services->getDoctrine();
+```
+
+In your repository, just set up the Service in the constructor like this :
+
+```php
+class TranslationsRepository
+{
+
+    protected $entityManager;
+
+    /**
+     * UserRepository constructor.
+     */
+    public function __construct()
+    {
+        $this->entityManager = new Services();
+    }
+	
+```
+
+Then just get doctrine like so
+
+```php
+    public function test()
+    {
+        $translation = new Translations();
+        $translation->setNom('name');
+        $translation->setFr('fr');
+        $translation->setEn('en');
+        $this->entityManager->getDoctrine()->persist($translation);
+        $this->entityManager->getDoctrine()->flush();
+    }
+	
+```
+
+#### Use mysql
+
+You can also use mysql for specific queries
+Just call staticly the function getInstance() from the class SPDO in **App/Model/SPDO.php**
+
+```php
+    public function findTranslation($name)
+    {
+        $query = 'SELECT * FROM translations WHERE nom LIKE :name OR fr LIKE :name OR en LIKE :name LIMIT 5';
+        $req = SPDO::getInstance()->prepare($query);
+        $req->execute([':name' => '%'.$name.'%']);
+        return $req->fetchAll(\PDO::FETCH_OBJ);
+    }
+	
+```
