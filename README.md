@@ -4,8 +4,6 @@ Simple PHP MVC Framework, using MySql/Doctrine/Namespace/Templates
 Set up a simple PHP project in less than 2 min
 Check documentation bellow
 
-[TOC]
-
 # Installation
 
 Once the project downloaded :
