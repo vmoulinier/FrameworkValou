@@ -3,11 +3,13 @@ namespace Core\HTML;
 
 class TemplateForm extends Form{
     
-    protected function surround($html){
+    protected function surround($html)
+    {
         return "<div class=\"form-group\">{$html}</div>";
     }
     
-    public function input($name, $label, $options = []){
+    public function input($name, $label, $options = [])
+    {
         $type = isset($options['type']) ? $options['type'] : 'text';
         $required = isset($options['required']) == 'false' ? ' ' : 'required';
         if($type === 'textarea'){
@@ -21,7 +23,8 @@ class TemplateForm extends Form{
         return $this->surround($label . $input);
     }
 
-    public function select($name, $label, $options){
+    public function select($name, $label, $options)
+    {
         $label = '<label>' . $label . '</label>';
         $input = '<select class="form-control" name="' . $name . '">';
         foreach($options as $k => $v){
@@ -35,7 +38,8 @@ class TemplateForm extends Form{
         return $this->surround($label . $input);
     }
     
-    public function submit($value, $name = false){
+    public function submit($value, $name = false)
+    {
         if($name) {
             return $this->surround('<button type="submit" name="'.$name.'" class="btn btn-primary" style="white-space: normal;">'.$value.'</button>');
         } else {

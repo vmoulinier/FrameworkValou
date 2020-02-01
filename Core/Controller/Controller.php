@@ -6,7 +6,6 @@ require_once "vendor/autoload.php";
 use App\Model\Repository;
 use Core\Services\Services;
 use Core\Services\Twig;
-use Mailjet\Client;
 
 class Controller {
 
@@ -25,7 +24,6 @@ class Controller {
         $this->services = new Services();
         $this->twig = new Twig();
     }
-
 
     protected function render($view, $datas = [])
     {
@@ -56,5 +54,4 @@ class Controller {
     {
         header('Location: '.PATH.$path);
     }
-
 }

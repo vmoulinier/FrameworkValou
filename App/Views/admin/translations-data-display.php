@@ -32,22 +32,22 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <br />
-                        <label for="name" class="bold">Nom</label>
+                        <label for="name" class="bold"><?= $this->twig->translation('translations.name') ?></label>
                         <input type="text" name="nom" id="nom<?= $translation->id ?>" class="form-control" value="<?= $translation->nom; ?>">
                         <br />
 
-                        <label for="fr" class="bold">Traduction Française</label>
-                        <input type="text" name="fr" id="fr<?= $translation->id ?>" class="form-control" value="<?= $translation->fr; ?>">
+                        <label for="fr" class="bold"><?= $this->twig->translation('translations.fr') ?></label>
+                        <textarea name="fr" id="fr<?= $translation->id ?>" class="form-control"><?= $translation->fr; ?></textarea>
                         <br />
 
-                        <label for="en" class="bold">Traduction anglaise</label>
-                        <input type="text" name="en" id="en<?= $translation->id ?>" class="form-control" value="<?= $translation->en; ?>">
+                        <label for="en" class="bold"><?= $this->twig->translation('translations.en') ?></label>
+                        <textarea name="en" id="en<?= $translation->id ?>" class="form-control"><?= $translation->en; ?></textarea>
                         <br />
-                        <p id="response<?= $translation->id ?>" class="green display">Modifications enregistrées</p>
+                        <p id="response<?= $translation->id ?>" class="green display"><?= $this->twig->translation('translations.saved') ?></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                        <button type="button" class="btn btn-primary" id="save<?= $translation->id ?>">Sauvegarder</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $this->twig->translation('translations.close') ?></button>
+                        <button type="button" class="btn btn-primary" id="save<?= $translation->id ?>"><?= $this->twig->translation('translations.save') ?></button>
                     </div>
                 </div>
             </div>

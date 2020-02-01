@@ -25,13 +25,17 @@ class Twig extends Config
         return false;
     }
 
-    public function translation($nom)
+    public function translation($nom, $params = [])
     {
         $translation = $this->entityManager->getRepository('App\Entity\Translations')->findOneBy(['nom' => $nom]);
         if ($translation) {
             $method = 'get' . ucfirst(DEFAULT_LANGAGE);
             if (method_exists($translation, $method)) {
-                return $translation->$method();
+                $str = $translation->$method();
+                foreach ($params as $key => $param) {
+                    $str = str_replace('%'.$key.'%', $param, $str);
+                }
+                return $str;
             }
         }
         return $nom;
