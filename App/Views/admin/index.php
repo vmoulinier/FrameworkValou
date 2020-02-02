@@ -1,1 +1,1 @@
-<h2 class="center">Page Admin</h2>
+<h2 class="center"><?= $this->twig->translation('admin.title') ?></h2>

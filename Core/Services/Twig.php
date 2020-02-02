@@ -25,9 +25,9 @@ class Twig extends Config
         return false;
     }
 
-    public function translation($nom, $params = [])
+    public function translation($name, $params = [])
     {
-        $translation = $this->entityManager->getRepository('App\Entity\Translations')->findOneBy(['nom' => $nom]);
+        $translation = $this->entityManager->getRepository('App\Entity\Translations')->findOneBy(['name' => $name]);
         if ($translation) {
             $method = 'get' . ucfirst(DEFAULT_LANGAGE);
             if (method_exists($translation, $method)) {
@@ -38,7 +38,11 @@ class Twig extends Config
                 return $str;
             }
         }
-        return $nom;
+        $str = ' ';
+        foreach ($params as $key => $param) {
+            $str .= '%' . $key . '% ';
+        }
+        return $name . $str;
     }
 
     public function isMobile() {

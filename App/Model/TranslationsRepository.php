@@ -22,7 +22,7 @@ class TranslationsRepository
     {
         $translation = new Translations();
         $translation->setId($_POST['id']);
-        $translation->setNom($_POST['nom']);
+        $translation->setName($_POST['name']);
         $translation->setFr($_POST['fr']);
         $translation->setEn($_POST['en']);
         $this->entityManager->getDoctrine()->merge($translation);
@@ -38,10 +38,10 @@ class TranslationsRepository
 
     public function addTranslation()
     {
-        $translation = $this->entityManager->getDoctrine()->getRepository('App\Entity\Translations')->findBy(['nom' => $_POST['nom']]);
+        $translation = $this->entityManager->getDoctrine()->getRepository('App\Entity\Translations')->findBy(['name' => $_POST['name']]);
         if(!$translation) {
             $translation = new Translations();
-            $translation->setNom($_POST['nom']);
+            $translation->setName($_POST['name']);
             $translation->setFr($_POST['fr']);
             $translation->setEn($_POST['en']);
             $this->entityManager->getDoctrine()->persist($translation);
@@ -51,7 +51,7 @@ class TranslationsRepository
 
     public function findTranslation($name)
     {
-        $query = 'SELECT * FROM translations WHERE nom LIKE :name OR fr LIKE :name OR en LIKE :name LIMIT 5';
+        $query = 'SELECT * FROM translations WHERE name LIKE :name OR fr LIKE :name OR en LIKE :name LIMIT 5';
         $req = SPDO::getInstance()->prepare($query);
         $req->execute([':name' => '%'.$name.'%']);
         return $req->fetchAll(\PDO::FETCH_OBJ);

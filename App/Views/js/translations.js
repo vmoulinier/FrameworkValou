@@ -1,11 +1,11 @@
 function save (id) {
     $('#save'+id).click(function () {
-        let nom = $('#nom'+id).val();
+        let name = $('#name'+id).val();
         let fr = $('#fr'+id).val();
         let en = $('#en'+id).val();
         $.ajax({
             type: 'post',
-            data: {id : id, nom : nom, fr : fr, en : en},
+            data: {id : id, name : name, fr : fr, en : en},
             success: function () {
                 $('#response'+id).show().fadeOut(5000);
             }
@@ -45,18 +45,18 @@ function search() {
         }
     });
     $('#add_save').click(function () {
-        let nom = $('#add_nom');
+        let name = $('#add_name');
         let fr = $('#add_fr');
         let en = $('#add_en');
 
         $.ajax({
             type: 'post',
             data: {
-                nom : nom.val(), fr : fr.val(), en : en.val(), add : true
+                name : name.val(), fr : fr.val(), en : en.val(), add : true
             },
             success: function () {
                 $('#response').show().fadeOut(5000);
-                nom.val('');
+                name.val('');
                 fr.val('');
                 en.val('');
             }

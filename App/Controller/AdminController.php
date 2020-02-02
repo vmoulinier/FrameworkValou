@@ -24,8 +24,6 @@ class AdminController extends Controller
 
     public function translations()
     {
-        $translations = $this->services->getDoctrine()->getRepository('App\Entity\Translations')->find(1);
-
         if(!empty($_POST)) {
             $repo = $this->services->getRepository('translations');
 
@@ -51,6 +49,6 @@ class AdminController extends Controller
 
         }
         $this->template = 'default';
-        $this->render('admin/translations', compact('translations'));
+        $this->render('admin/translations');
     }
 }

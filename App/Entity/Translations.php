@@ -16,7 +16,7 @@ class Translations
      * @Column(type="string")
      * @var string
      */
-    private $nom;
+    private $name;
 
     /**
      * @Column(type="string")
@@ -49,17 +49,17 @@ class Translations
     /**
      * @return string
      */
-    public function getNom(): string
+    public function getName(): string
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
-     * @param string $nom
+     * @param string $name
      */
-    public function setNom(string $nom)
+    public function setName(string $name)
     {
-        $this->nom = $nom;
+        $this->name = $name;
     }
 
     /**

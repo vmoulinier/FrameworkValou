@@ -1,5 +1,5 @@
 <h2 class="center mb-4"><?= $this->twig->translation('translations.title') ?></h2>
-<?= $translations->getFr() ?>
+
 <div class="row">
     <div class="col-10">
         <input type="text" name="search" id="search" class="form-control" placeholder="Find translation">
@@ -17,7 +17,7 @@
                     </button>
                     <br />
                     <label for="name" class="bold"><?= $this->twig->translation('translations.name') ?></label>
-                    <input type="text" name="add_nom" id="add_nom" class="form-control">
+                    <input type="text" name="add_name" id="add_name" class="form-control">
                     <br />
 
                     <label for="fr" class="bold"><?= $this->twig->translation('translations.fr') ?></label>

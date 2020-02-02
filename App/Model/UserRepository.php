@@ -18,7 +18,7 @@ class UserRepository
     }
 
 
-    public function register($email, $password, $password_verif, $nom, $prenom): string
+    public function register($email, $password, $password_verif, $name, $firstname): string
     {
         $users = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['email' => $email]);
 
@@ -26,19 +26,18 @@ class UserRepository
             if($password === $password_verif) {
                 $password = sha1($password);
                 $user = new User();
-                $user->setNom($nom);
-                $user->setPrenom($prenom);
+                $user->setName($name);
+                $user->setFirstName($firstname);
                 $user->setEmail($email);
                 $user->setPassword($password);
-                $user->setGroupe(null);
                 $this->entityManager->getDoctrine()->persist($user);
                 $this->entityManager->getDoctrine()->flush();
-                $error = "Compte enregistré !";
+                $error = "account.register.success";
             } else {
-                $error = "Vos mots de passes sont différents.";
+                $error = "account.register.diff.pass";
             }
         } else {
-            $error = "Email déjà existant";
+            $error = "account.register.mail.exist";
         }
         return $error;
     }

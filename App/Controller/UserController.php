@@ -57,11 +57,11 @@ class UserController extends Controller
 
         if(!empty($_POST)) {
             $email = $_POST['email'];
-            $nom = $_POST['nom'];
-            $prenom = $_POST['prenom'];
+            $name = $_POST['name'];
+            $firstname = $_POST['firstname'];
             $password = $_POST['password'];
             $password_verif = $_POST['password_verif'];
-            $error = $userrepo->register($email, $password, $password_verif, $nom, $prenom);
+            $error = $userrepo->register($email, $password, $password_verif, $name, $firstname);
         }
 
         $form = new TemplateForm($_POST);

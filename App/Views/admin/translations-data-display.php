@@ -1,7 +1,7 @@
 <table class="table mt-4">
     <thead class="table-info bold">
     <tr>
-        <td>Nom</td>
+        <td>Name</td>
         <td>Fr</td>
         <td>En</td>
         <td>Action</td>
@@ -12,7 +12,7 @@
     <?php foreach ($translations as $translation): ?>
         <tr>
             <td>
-                <div id="nom_<?= $translation->id ?>"><?= $translation->nom; ?></div>
+                <div id="name_<?= $translation->id ?>"><?= $translation->name; ?></div>
             </td>
             <td>
                 <div id="fr_<?= $translation->id ?>"><?= $translation->fr; ?></div>
@@ -34,7 +34,7 @@
                         </button>
                         <br />
                         <label for="name" class="bold"><?= $this->twig->translation('translations.name') ?></label>
-                        <input type="text" name="nom" id="nom<?= $translation->id ?>" class="form-control" value="<?= $translation->nom; ?>">
+                        <input type="text" name="name" id="name<?= $translation->id ?>" class="form-control" value="<?= $translation->name; ?>">
                         <br />
 
                         <label for="fr" class="bold"><?= $this->twig->translation('translations.fr') ?></label>

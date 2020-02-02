@@ -1,4 +1,4 @@
-<h2 class="center">Page Login</h2>
+<h2 class="center"><?= $this->twig->translation('login.title') ?></h2>
 <div class="row">
     <div class="col-4 offset-4">
         <form method="post">

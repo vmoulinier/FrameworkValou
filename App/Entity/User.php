@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * @Entity @Table(name="user")
  */
@@ -19,13 +17,13 @@ class User
      * @Column(type="string")
      * @var string
      */
-    private $nom;
+    private $name;
 
     /**
      * @Column(type="string")
      * @var string
      */
-    private $prenom;
+    private $firstname;
 
     /**
      * @Column(type="string")
@@ -46,25 +44,6 @@ class User
     private $email;
 
     /**
-     * @OneToMany(targetEntity="Mediatheque", mappedBy="user")
-     * @JoinColumn(nullable=true)
-     */
-    private $mediatheque;
-
-    /**
-     *
-     * @ManyToOne(targetEntity="Groupe", inversedBy="user", cascade={"persist", "merge"})
-     * @JoinColumn(name="groupe_id", referencedColumnName="id")
-     */
-    private $groupe;
-    
-    public function __construct()
-    {
-        $this->mediatheque = new ArrayCollection();
-        $this->groupe = new ArrayCollection();
-    }
-    
-    /**
      * @return mixed
      */
     public function getId()
@@ -83,33 +62,33 @@ class User
     /**
      * @return mixed
      */
-    public function getNom()
+    public function getName()
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
-     * @param mixed $nom
+     * @param mixed $name
      */
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->nom = $nom;
+        $this->name = $name;
     }
 
     /**
      * @return mixed
      */
-    public function getPrenom()
+    public function getFirstName()
     {
-        return $this->prenom;
+        return $this->firstname;
     }
 
     /**
-     * @param mixed $prenom
+     * @param mixed $firstname
      */
-    public function setPrenom($prenom)
+    public function setFirstName($firstname)
     {
-        $this->prenom = $prenom;
+        $this->firstname = $firstname;
     }
 
     /**
@@ -158,37 +137,5 @@ class User
     public function setPassword($password)
     {
         $this->password = $password;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMediatheque()
-    {
-        return $this->mediatheque;
-    }
-
-    /**
-     * @param mixed $mediatheque
-     */
-    public function setMediatheque(Mediatheque $mediatheque)
-    {
-        $this->mediatheque = $mediatheque;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGroupe()
-    {
-        return $this->groupe;
-    }
-
-    /**
-     * @param mixed $groupe
-     */
-    public function setGroupe($groupe)
-    {
-        $this->groupe = $groupe;
     }
 }
