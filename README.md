@@ -170,6 +170,12 @@ Then just get doctrine like so
 	
 ```
 
+Use doctrine commands
+
+```php
+vendor\bin\doctrine orm:schema-tool:update --force --dump-sql
+```
+
 #### Use mysql
 
 You can also use mysql for specific queries
