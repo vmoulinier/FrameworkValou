@@ -23,6 +23,7 @@ class Controller {
         $this->repository = new Repository();
         $this->services = new Services();
         $this->twig = new Twig();
+        $this->dataValidator();
     }
 
     protected function render($view, $datas = [])
@@ -54,4 +55,14 @@ class Controller {
     {
         header('Location: '.PATH.$path);
     }
+
+    public function dataValidator()
+    {
+        if(!empty($_POST)) {
+            foreach ($_POST as $key => $data) {
+                $_POST[$key] = htmlspecialchars($data);
+            }
+        }
+    }
+
 }

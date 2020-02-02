@@ -34,6 +34,6 @@
 </div>
 
 <div class="container">
-    <?php echo $content; ?>
+    <?= $content; ?>
 </div>
 </body>

@@ -1,5 +1,5 @@
 <h2 class="center mb-4"><?= $this->twig->translation('translations.title') ?></h2>
-
+<?= $translations->getFr() ?>
 <div class="row">
     <div class="col-10">
         <input type="text" name="search" id="search" class="form-control" placeholder="Find translation">
@@ -37,42 +37,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $( document ).ready(function() {
-        $( document ).on( "keyup",'#search', function() {
-            let search = $(this).val();
-            if(search) {
-                $.ajax({
-                    type: 'post',
-                    data: {
-                        search : search
-                    },
-                    success: function (response) {
-                        $( '#display_info' ).html(response);
-                    }
-                });
-            } else {
-                $( '#display_info' ).html(" ");
-            }
-        });
-        $('#add_save').click(function () {
-            let nom = $('#add_nom');
-            let fr = $('#add_fr');
-            let en = $('#add_en');
-
-            $.ajax({
-                type: 'post',
-                data: {
-                    nom : nom.val(), fr : fr.val(), en : en.val(), add : true
-                },
-                success: function (response) {
-                    console.log(response);
-                    $('#response').show().fadeOut(5000);
-                    nom.val('');
-                    fr.val('');
-                    en.val('');
-                }
-            });
-        });
-    });
+<script src="<?= PATH ?>/App/Views/js/translations.js"></script>
+<script>
+    $(document).ready(search());
 </script>

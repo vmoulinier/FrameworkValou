@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-
 use App\Entity\User;
 use Core\Services\Services;
 

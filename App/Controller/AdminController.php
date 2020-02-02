@@ -1,17 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vmoul
- * Date: 09/03/2017
- * Time: 23:53
- */
 
 namespace App\Controller;
 
-
-use App\Entity\Translations;
-use App\Model\SPDO;
-use App\Model\UserRepository;
 use Core\Controller\Controller;
 
 class AdminController extends Controller
@@ -34,6 +24,8 @@ class AdminController extends Controller
 
     public function translations()
     {
+        $translations = $this->services->getDoctrine()->getRepository('App\Entity\Translations')->find(1);
+
         if(!empty($_POST)) {
             $repo = $this->services->getRepository('translations');
 
@@ -59,6 +51,6 @@ class AdminController extends Controller
 
         }
         $this->template = 'default';
-        $this->render('admin/translations');
+        $this->render('admin/translations', compact('translations'));
     }
 }

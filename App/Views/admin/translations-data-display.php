@@ -8,6 +8,7 @@
     </tr>
     </thead>
     <tbody>
+    <script src="<?= PATH ?>/App/Views/js/translations.js"></script>
     <?php foreach ($translations as $translation): ?>
         <tr>
             <td>
@@ -53,37 +54,8 @@
             </div>
         </div>
         <script>
-            $('#save<?= $translation->id ?>').click(function () {
-                let nom = $('#nom<?= $translation->id ?>').val();
-                let fr = $('#fr<?= $translation->id ?>').val();
-                let en = $('#en<?= $translation->id ?>').val();
-                $.ajax({
-                    type: 'post',
-                    data: {id : '<?= $translation->id ?>', nom : nom, fr : fr, en : en},
-                    success: function () {
-                        $('#response<?= $translation->id ?>').show().fadeOut(5000);
-                    }
-                });
-            });
-            $('#translateModal<?= $translation->id ?>').on('hidden.bs.modal', function () {
-                $('#search').keyup();
-            });
-            $('#delete<?= $translation->id ?>').click(function(){
-                if (confirm('Supprimer cette traduction ?')) {
-                    $.ajax({
-                        type: 'post',
-                        data: {id_delete : '<?= $translation->id ?>'},
-                        success: function () {
-                            $('#search').keyup();
-                        },
-                    });
-                }
-            });
+            save('<?= $translation->id ?>');
         </script>
     <?php endforeach; ?>
     </tbody>
 </table>
-
-
-
-

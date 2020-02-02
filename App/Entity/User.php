@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Model\SPDO;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

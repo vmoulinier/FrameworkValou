@@ -1,4 +1,5 @@
 <?php
+
 namespace Core\HTML;
 
 class TemplateForm extends Form{
