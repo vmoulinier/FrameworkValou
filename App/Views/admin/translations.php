@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-10">
-        <input type="text" name="search" id="search" class="form-control" placeholder="Find translation">
+        <input type="text" name="search" id="search" class="form-control" placeholder="<?= $this->twig->translation('translations.placeholder') ?>">
     </div>
     <div class="col-2">
         <button class="btn btn-success" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i><?= $this->twig->translation('translations.add') ?></button>

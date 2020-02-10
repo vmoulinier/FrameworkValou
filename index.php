@@ -15,6 +15,11 @@ if(isset($_GET['p'])){
     $page = 'home/index';
 }
 
+if (ENV === 'prod') {
+    error_reporting(0);
+    ini_set('display_errors', 0);
+}
+
 $page = explode('/', $page);
 
 if(class_exists('\App\Controller\\' . ucfirst($page[0]) . 'Controller')) {

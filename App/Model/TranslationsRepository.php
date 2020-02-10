@@ -41,7 +41,7 @@ class TranslationsRepository
         $translation = $this->entityManager->getDoctrine()->getRepository('App\Entity\Translations')->findBy(['name' => $_POST['name']]);
         if(!$translation) {
             $translation = new Translations();
-            $translation->setName($_POST['name']);
+            $translation->setName(trim($_POST['name']));
             $translation->setFr($_POST['fr']);
             $translation->setEn($_POST['en']);
             $this->entityManager->getDoctrine()->persist($translation);

@@ -18,16 +18,14 @@ class UserController extends Controller
         if(!empty($_POST)) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            if($userrepo->login($email, $password)) {
+            if ($userrepo->login($email, $password)) {
                 $this->redirect('/user/profil');
             }
-            else {
-                $error = 'Mauvais mail/mot de passe !';
-            }
+            $this->addFlashBag('login.bad.password', 'danger');
         }
 
         $form = new TemplateForm($_POST);
-        $this->render('user/login', compact('form', 'error'));
+        $this->render('user/login', compact('form'));
     }
 
     public function loginfb()
@@ -49,7 +47,6 @@ class UserController extends Controller
     {
         $this->template = 'default';
         $userrepo = new UserRepository();;
-        $error = ' ';
         
         if($userrepo->islogged()){
             $this->denied();
@@ -62,10 +59,11 @@ class UserController extends Controller
             $password = $_POST['password'];
             $password_verif = $_POST['password_verif'];
             $error = $userrepo->register($email, $password, $password_verif, $name, $firstname);
+            $this->addFlashBag($error[0], $error[1]);
         }
 
         $form = new TemplateForm($_POST);
-        $this->render('user/register', compact('form', 'error'));
+        $this->render('user/register', compact('form'));
     }
 
     public function logout()

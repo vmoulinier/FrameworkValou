@@ -11,22 +11,24 @@ Once the project downloaded :
 - configure and rename the **env.php.dist** file
 
 ```php
-define('ROOT', dirname(str_replace('\\', '/', __DIR__)));
-define('PROJECT_NAME', 'yourProjectName');
+define('PROJECT_NAME', 'FrameworkValou');
+define('ENV', 'dev');
 define('DB_USER', 'root');
-define('DB_PASS', 'DB_PASS');
-define('DB_NAME', 'DB_NAME');
-define('PATH', 'http://localhost/yourProjectName');
+define('DB_PASS', '');
+define('DB_NAME', 'test');
+define('ROOT', dirname(str_replace('\\', '/', __DIR__)));
+define('PATH', 'http://localhost/FrameworkValou');
 define('MJ_APIKEY_PUBLIC', 'IF YOU USE MAILJET');
 define('MJ_APIKEY_PRIVATE', 'IF YOU USE MAILJET');
 define('MJ_FROM_EMAIL', 'IF YOU USE MAILJET');
 define('MJ_FROM_NAME', 'IF YOU USE MAILJET');
 define('FACEBOOK_APIKEY', 'FACEBOOK API KEY');
 define('FACEBOOK_API_SECRET', 'FACEBOOK API SECRET');
-define('UPLOAD_PATH', ROOT . 'images/upload');
+define('UPLOAD_PATH', 'Public/images/upload');
 define('DEFAULT_LANGAGE', 'en');
-
 ```
+- run **vendor\bin\doctrine orm:schema-tool:update --force --dump-sql** for the database schema
+- run **vendor\bin\doctrine dbal:import data.sql** to import existing translations 
 
 # How it work
 ## Controllers

@@ -13,3 +13,4 @@ $entityManager = $services->getDoctrine();
 return ConsoleRunner::createHelperSet($entityManager);
 
 //vendor\bin\doctrine orm:schema-tool:update --force --dump-sql
+//vendor\bin\doctrine dbal:import data.sql

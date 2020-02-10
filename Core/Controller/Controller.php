@@ -13,6 +13,7 @@ class Controller {
     protected $template;
     protected $repository;
     protected $services;
+    protected $flashBag = [];
 
 
     /**
@@ -31,6 +32,7 @@ class Controller {
         ob_start();
         extract($datas);
         require($this->path . str_replace('.', '/', $view) . '.php');
+        $flashBag = $this->flashBag;
         $content = ob_get_clean();
         require($this->path . 'templates/' . $this->template . '.php');
     }
@@ -63,6 +65,12 @@ class Controller {
                 $_POST[$key] = htmlspecialchars($data);
             }
         }
+    }
+
+    public function addFlashBag($content, $type = 'success')
+    {
+        $this->flashBag[0] = $content;
+        $this->flashBag[1] = $type;
     }
 
 }

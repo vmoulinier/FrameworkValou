@@ -12,7 +12,7 @@ class TemplateForm extends Form{
     public function input($name, $label, $options = [])
     {
         $type = isset($options['type']) ? $options['type'] : 'text';
-        $required = isset($options['required']) == 'false' ? ' ' : 'required';
+        $required = isset($options['required']) === 'false' ? ' ' : 'required';
         if($type === 'textarea'){
             $input = '<textarea name="' . $name . '" class="form-control" '. $required .'>' . $name . '</textarea>';
         } elseif ($type === 'hidden') {
@@ -30,7 +30,7 @@ class TemplateForm extends Form{
         $input = '<select class="form-control" name="' . $name . '">';
         foreach($options as $k => $v){
             $attributes = '';
-            if($k == $this->getValue($name)){
+            if($k === $this->getValue($name)){
                 $attributes = ' selected';
             }
             $input .= "<option value='$k'$attributes>$v</option>";

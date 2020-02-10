@@ -18,7 +18,7 @@ class Twig extends Config
     public function loggedAdmin(): bool
     {
         if(isset($_SESSION['user_id']) && isset($_SESSION['user_role_admin'])) {
-            if($_SESSION['user_role_admin'] == 'ROLE_ADMIN') {
+            if($_SESSION['user_role_admin'] === 'ROLE_ADMIN') {
                 return true;
             }
         }

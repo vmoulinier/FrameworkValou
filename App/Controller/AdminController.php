@@ -10,9 +10,11 @@ class AdminController extends Controller
     {
         parent::__construct();
 
-        //if is not logged admin, then acces denied
-        if(!$this->twig->loggedAdmin()){
-            $this->denied();
+        //if is not logged admin, then acces denied in env prod
+        if (ENV === 'prod') {
+            if(!$this->twig->loggedAdmin()){
+                $this->denied();
+            }
         }
     }
 
@@ -46,8 +48,8 @@ class AdminController extends Controller
                 $this->render('admin/translations-data-display', compact('translations'));
                 die;
             }
-
         }
+
         $this->template = 'default';
         $this->render('admin/translations');
     }

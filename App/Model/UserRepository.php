@@ -18,9 +18,10 @@ class UserRepository
     }
 
 
-    public function register($email, $password, $password_verif, $name, $firstname): string
+    public function register($email, $password, $password_verif, $name, $firstname): array
     {
         $users = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['email' => $email]);
+        $error = [];
 
         if(!$users) {
             if($password === $password_verif) {
@@ -30,14 +31,21 @@ class UserRepository
                 $user->setFirstName($firstname);
                 $user->setEmail($email);
                 $user->setPassword($password);
+                if (ENV === 'dev') {
+                    $user->setType('ROLE_ADMIN');
+                }
+                $user->setPassword($password);
                 $this->entityManager->getDoctrine()->persist($user);
                 $this->entityManager->getDoctrine()->flush();
-                $error = "account.register.success";
+                $error[0] = "account.register.success";
+                $error[1] = "success";
             } else {
-                $error = "account.register.diff.pass";
+                $error[0] = "account.register.diff.pass";
+                $error[1] = "danger";
             }
         } else {
-            $error = "account.register.mail.exist";
+            $error[0] = "account.register.mail.exist";
+            $error[1] = "danger";
         }
         return $error;
     }
@@ -46,7 +54,7 @@ class UserRepository
     {
         $user = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['email' =>$email, 'password' =>sha1($password)]);
         if($user) {
-            if($user->getType() == 'ROLE_ADMIN'){
+            if($user->getType() === 'ROLE_ADMIN'){
                 $this->saveSessionAdmin($user->getId(), $user->getType());
                 return true;
             }
@@ -60,7 +68,7 @@ class UserRepository
     {
         $user = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['email' =>$email, 'facebook_id' => $facebookId]);
         if($user) {
-            if($user->getType() == 'ROLE_ADMIN'){
+            if($user->getType() === 'ROLE_ADMIN'){
                 $this->saveSessionAdmin($user->getId(), $user->getType());
                 return true;
             }
@@ -80,7 +88,7 @@ class UserRepository
 
     public function isloggedAdmin(): bool
     {
-        if(isset($_SESSION['user_id']) and isset($_SESSION['user_role_admin']) == 'ROLE_ADMIN') {
+        if(isset($_SESSION['user_id']) and isset($_SESSION['user_role_admin']) === 'ROLE_ADMIN') {
             return true;
         }
         return false;
