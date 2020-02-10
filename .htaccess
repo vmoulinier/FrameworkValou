@@ -6,7 +6,7 @@ RewriteRule "^([a-z0-9-_/]+)/$" "index.php?p=$1" [L,QSA]
 RewriteRule "^([a-z0-9-_/]+)/([0-9-_]+)" "index.php?p=$1&id=$2" [L,QSA]
 RewriteRule "^([a-z0-9-_/]+)$" "index.php?p=$1" [L,QSA]
 
-### If you use HTTP, uncomment below S###
+### If you use HTTPS, uncomment below S###
 
 #RewriteCond %{HTTPS} off
 #RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
