@@ -6,9 +6,11 @@ RewriteRule "^([a-z0-9-_/]+)/$" "index.php?p=$1" [L,QSA]
 RewriteRule "^([a-z0-9-_/]+)/([0-9-_]+)" "index.php?p=$1&id=$2" [L,QSA]
 RewriteRule "^([a-z0-9-_/]+)$" "index.php?p=$1" [L,QSA]
 
-#work without letter i
+### If you use HTTP, uncomment below S###
 
-#RewriteRule ^([a-z0-9-_/]+)/$ index.php?p=$1 [L,QSA]
-#RewriteRule ^([a-z0-9-_/]+)/([a-z-_/]+) index.php?p=$1&name=$2 [L,QSA]
-#RewriteRule ^([a-z0-9-_/]+)$ index.php?p=$1 [L,QSA]
-
+#RewriteCond %{HTTPS} off
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+#RewriteCond %{HTTP_HOST} !=""
+#RewriteCond %{HTTP_HOST} !^www\. [NC]
+#RewriteCond %{HTTPS}s ^on(s)|
+#RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
