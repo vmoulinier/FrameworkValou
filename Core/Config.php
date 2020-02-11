@@ -34,6 +34,7 @@ class Config
             'user'     => DB_USER,
             'password' => DB_PASS,
             'dbname'   => DB_NAME,
+            'charset'  => 'UTF8',
         ];
         $this->entityManager = \Doctrine\ORM\EntityManager::create($databaseParams, $config);
 
