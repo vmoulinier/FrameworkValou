@@ -16,6 +16,7 @@ class SPDO
     {
         $this->PDOInstance = new \PDO('mysql:dbname='.DB_NAME.';host='.self::DEFAULT_SQL_HOST,DB_USER ,DB_PASS);
         $this->PDOInstance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $this->PDOInstance->exec("SET NAMES 'utf8';");
     }
 
     public static function getInstance()
