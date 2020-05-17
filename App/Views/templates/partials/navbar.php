@@ -15,4 +15,7 @@
         <a class="btn btn-outline-primary mr-1" href="<?= PATH ?>/user/register"><?= $this->twig->translation('home.signup') ?></a>
         <a class="btn btn-outline-primary mr-1" href="<?= PATH ?>/user/login"><?= $this->twig->translation('home.signin') ?></a>
     <?php endif ?>
+    <?php if(isset($_SESSION['edit_admin_id'])): ?>
+        <a href="<?=PATH?>/admin/relog" class="btn btn-success ml-1">Se reconnecter</a>
+    <?php endif; ?>
 </div>

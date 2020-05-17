@@ -56,10 +56,26 @@ class AdminController extends Controller
 
     public function users()
     {
-        $repo = $this->services->getRepository('user');
-        $users = $repo->findAll();
+        $userRepo = $this->services->getRepository('user');
+        $adminRepo = $this->services->getRepository('admin');
+
+        if(!empty($_POST)) {
+            if(isset($_POST['login'])) {
+                $adminRepo->login($_POST['login']);
+                $this->redirect('/home/index');
+            }
+        }
+
+        $users = $userRepo->findAll();
 
         $this->template = 'admin';
         $this->render('admin/users', compact('users'));
+    }
+
+    public function relog()
+    {
+        $_SESSION['user_id'] = $_SESSION['edit_admin_id'];
+        unset($_SESSION['edit_admin_id']);
+        $this->redirect('/admin/index');
     }
 }

@@ -89,12 +89,12 @@ class UserRepository extends Repository
         return false;
     }
 
-    private function saveSession(int $id)
+    public function saveSession(int $id)
     {
         $_SESSION['user_id'] = $id;
     }
 
-    private function saveSessionAdmin(int $id, string $role)
+    public function saveSessionAdmin(int $id, string $role)
     {
         $_SESSION['user_id'] = $id;
         $_SESSION['user_role_admin'] = $role;

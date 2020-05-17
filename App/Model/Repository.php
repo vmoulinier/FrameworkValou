@@ -15,23 +15,7 @@ class Repository
         $currentClass = explode('\\', get_class($this));
         $currentClass = str_replace('Repository', '', $currentClass[2]);
         $this->entityManager = new Services();
-        $currentClass ? $this->entityRepository = $this->entityManager->getDoctrine()->getRepository('App\Entity\\'.$currentClass) : $this->entityRepository = null;
-    }
-
-    public function hydrate($strobject, array $data)
-    {
-        $strobject =  '\App\Entity\\'.ucfirst($strobject);
-        if(class_exists($strobject)){
-            $object = new $strobject();
-            foreach ($data as $key => $value) {
-                $method = 'set' . ucfirst($key);
-                if (method_exists($object, $method)) {
-                    $object->$method($value);
-                }
-            }
-            return $object;
-        }
-        return false;
+        class_exists('App\Entity\\'.$currentClass) ? $this->entityRepository = $this->entityManager->getDoctrine()->getRepository('App\Entity\\'.$currentClass) : $this->entityRepository = null;
     }
 
     public function find($id, $lockMode = null, $lockVersion = null)
