@@ -39,7 +39,7 @@ class UserController extends Controller
                     $this->render('user/login', compact('form'));
                     die;
                 }
-                $userRepo->login($profil->getEmail(), $profil->getId());
+                $userRepo->login($profil->getEmail(), $profil->getId(), true);
                 $this->redirect('/user/profil');
             }
         }

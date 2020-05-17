@@ -52,10 +52,13 @@ class UserRepository
         return $error;
     }
 
-    public function login(string $email, string $password): bool
+    public function login(string $email, string $password, bool $facebook = false): bool
     {
         $user = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['email' =>$email, 'password' =>sha1($password)]);
         if($user) {
+            if ($user->getFacebookId() && !$facebook) {
+                return false;
+            }
             if($user->getType() === 'ROLE_ADMIN'){
                 $this->saveSessionAdmin($user->getId(), $user->getType());
                 return true;

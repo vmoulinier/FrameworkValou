@@ -62,11 +62,8 @@ class Controller {
     {
         if(!empty($_POST)) {
             foreach ($_POST as $key => $data) {
-                var_dump($_POST[$key]);
                 $_POST[$key] = htmlspecialchars($data);
-                var_dump($_POST[$key]);
             }
-            die;
         }
     }
 
