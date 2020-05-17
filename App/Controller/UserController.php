@@ -40,8 +40,8 @@ class UserController extends Controller
                     die;
                 }
                 $userRepo->login($profil->getEmail(), $profil->getId(), true);
-                $this->redirect('/user/profil');
             }
+            $this->redirect('/user/profil');
         }
 
         $this->render('user/login', compact('form'));
