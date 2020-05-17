@@ -44,98 +44,135 @@ class User
     private $email;
 
     /**
-     * @return mixed
+     * @Column(type="string")
+     * @var string
      */
-    public function getId()
+    private $facebook_id;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
+     * @return User
      */
-    public function setId($id)
+    public function setId(int $id): User
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFirstName()
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * @param mixed $firstname
-     */
-    public function setFirstName($firstname)
-    {
-        $this->firstname = $firstname;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getType()
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return User
+     */
+    public function setName(string $name): User
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstname(): string
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param string $firstname
+     * @return User
+     */
+    public function setFirstname(string $firstname): User
+    {
+        $this->firstname = $firstname;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     * @return User
+     */
+    public function setPassword(string $password): User
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
     {
         return $this->type;
     }
 
     /**
      * @param string $type
+     * @return User
      */
-    public function setType($type)
+    public function setType(string $type): User
     {
         $this->type = $type;
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPassword()
+    public function getEmail(): string
     {
-        return $this->password;
+        return $this->email;
     }
 
     /**
-     * @param mixed $password
+     * @param string $email
+     * @return User
      */
-    public function setPassword($password)
+    public function setEmail(string $email): User
     {
-        $this->password = $password;
+        $this->email = $email;
+        return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getFacebookId(): string
+    {
+        return $this->facebook_id;
+    }
+
+    /**
+     * @param string $facebook_id
+     * @return User
+     */
+    public function setFacebookId(string $facebook_id): User
+    {
+        $this->facebook_id = $facebook_id;
+        return $this;
+    }
+
 }

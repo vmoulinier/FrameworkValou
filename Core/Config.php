@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Core;
 
 use Mailjet\Client;
@@ -16,7 +15,6 @@ class Config
     protected $helper;
 
     protected $fb;
-
 
     /**
      * Config constructor.
@@ -46,6 +44,6 @@ class Config
         ]);
         $this->helper = $fb->getRedirectLoginHelper();
         $this->fb = $fb;
-
     }
+
 }

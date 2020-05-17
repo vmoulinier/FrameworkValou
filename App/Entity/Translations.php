@@ -40,10 +40,12 @@ class Translations
 
     /**
      * @param int $id
+     * @return Translations
      */
-    public function setId(int $id)
+    public function setId(int $id): Translations
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
@@ -56,10 +58,12 @@ class Translations
 
     /**
      * @param string $name
+     * @return Translations
      */
-    public function setName(string $name)
+    public function setName(string $name): Translations
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -72,10 +76,12 @@ class Translations
 
     /**
      * @param string $fr
+     * @return Translations
      */
-    public function setFr(string $fr)
+    public function setFr(string $fr): Translations
     {
         $this->fr = $fr;
+        return $this;
     }
 
     /**
@@ -88,10 +94,12 @@ class Translations
 
     /**
      * @param string $en
+     * @return Translations
      */
-    public function setEn(string $en)
+    public function setEn(string $en): Translations
     {
         $this->en = $en;
+        return $this;
     }
 
 }

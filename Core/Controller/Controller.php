@@ -15,11 +15,11 @@ class Controller {
     protected $services;
     protected $flashBag = [];
 
-
     /**
      * Controller constructor.
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->path = 'App/Views/';
         $this->repository = new Repository();
         $this->services = new Services();
@@ -62,8 +62,11 @@ class Controller {
     {
         if(!empty($_POST)) {
             foreach ($_POST as $key => $data) {
+                var_dump($_POST[$key]);
                 $_POST[$key] = htmlspecialchars($data);
+                var_dump($_POST[$key]);
             }
+            die;
         }
     }
 

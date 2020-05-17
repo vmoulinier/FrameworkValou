@@ -6,6 +6,7 @@
     <meta name="author" content="">
     <title><?= PROJECT_NAME ?></title>
     <link href="<?= PATH ?>/Public/css/bootstrap.css" rel="stylesheet">
+    <link href="<?= PATH ?>/Public/css/bootstrap-social.css" rel="stylesheet">
     <link href="<?= PATH ?>/Public/css/styles.css?v=<?=time();?>" rel="stylesheet">
     <script src="<?= PATH ?>/Public/js/jquery-3.4.1.js"></script>
     <script src="<?= PATH ?>/Public/js/bootstrap.js"></script>

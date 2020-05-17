@@ -3,6 +3,7 @@
 namespace Core\Services;
 
 use Core\Config;
+use Doctrine\ORM\EntityManager;
 use Mailjet\Resources;
 
 require_once 'Core/Config.php';
@@ -10,7 +11,7 @@ require_once 'Core/Config.php';
 class Services extends Config
 {
 
-    public function sendMail($to, $subject, $htmlPart)
+    public function sendMail(string $to, string $subject, string $htmlPart): void
     {
         $body = [
             'Messages' => [
@@ -40,14 +41,14 @@ class Services extends Config
         throw new \Error('repository not found');
     }
 
-    public function getDoctrine()
+    public function getDoctrine(): EntityManager
     {
         return $this->entityManager;
     }
 
-    public function getUrlLoginFacebook($scope)
+    public function getUrlLoginFacebook($scope): string
     {
-        return $this->helper->getLoginUrl(PATH .'/user/loginfb?login=true', $scope);
+        return $this->helper->getLoginUrl(PATH .'/user/login?login=true', $scope);
     }
 
     public function getProfilFacebook()

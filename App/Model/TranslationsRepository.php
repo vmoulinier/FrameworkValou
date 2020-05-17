@@ -18,25 +18,23 @@ class TranslationsRepository
         $this->entityManager = new Services();
     }
 
-    public function updateTranslation()
+    public function updateTranslation(): void
     {
-        $translation = new Translations();
-        $translation->setId($_POST['id']);
+        $translation = $this->entityManager->getDoctrine()->getRepository('App\Entity\Translations')->find($_POST['id']);
         $translation->setName($_POST['name']);
         $translation->setFr($_POST['fr']);
         $translation->setEn($_POST['en']);
-        $this->entityManager->getDoctrine()->merge($translation);
         $this->entityManager->getDoctrine()->flush();
     }
 
-    public function removeTranslation()
+    public function removeTranslation(): void
     {
         $translation = $this->entityManager->getDoctrine()->getRepository('App\Entity\Translations')->find($_POST['id_delete']);
         $this->entityManager->getDoctrine()->remove($translation);
         $this->entityManager->getDoctrine()->flush();
     }
 
-    public function addTranslation()
+    public function addTranslation(): void
     {
         $translation = $this->entityManager->getDoctrine()->getRepository('App\Entity\Translations')->findBy(['name' => $_POST['name']]);
         if(!$translation) {
@@ -49,7 +47,7 @@ class TranslationsRepository
         }
     }
 
-    public function findTranslation($name)
+    public function findTranslation(string $name): array
     {
         $query = 'SELECT * FROM translations WHERE name LIKE :name OR fr LIKE :name OR en LIKE :name LIMIT 5';
         $req = SPDO::getInstance()->prepare($query);

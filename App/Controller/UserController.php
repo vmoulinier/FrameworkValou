@@ -12,8 +12,13 @@ class UserController extends Controller
     public function login()
     {
         $this->template = 'default';
-        $error = ' ';
         $userrepo = new UserRepository();
+        $form = new TemplateForm($_POST);
+
+        if (isset($_GET['loginfb'])) {
+            $url = $this->services->getUrlLoginFacebook(['email']);
+            header('Location: ' . $url);
+        }
 
         if(!empty($_POST)) {
             $email = $_POST['email'];
@@ -24,23 +29,22 @@ class UserController extends Controller
             $this->addFlashBag('login.bad.password', 'danger');
         }
 
-        $form = new TemplateForm($_POST);
-        $this->render('user/login', compact('form'));
-    }
-
-    public function loginfb()
-    {
         if (isset($_GET['login'])) {
             $profil = $this->services->getProfilFacebook();
             $userRepo = $this->services->getRepository('user');
-            if ($userRepo->loginfb($profil->getEmail(), $profil->getId())) {
-                $this->redirect('user/profil');
+            if (!$userRepo->loginfb($profil->getEmail(), $profil->getId())) {
+                $error = $userRepo->register($profil->getEmail(), $profil->getId(), $profil->getId(), $profil->getLastName() , $profil->getFirstName(), $profil->getId());
+                $this->addFlashBag($error[0], $error[1]);
+                if (!$error[2]) {
+                    $this->render('user/login', compact('form'));
+                    die;
+                }
+                $userRepo->login($profil->getEmail(), $profil->getId());
+                $this->redirect('/user/profil');
             }
-            $this->redirect('home/index');
         }
 
-        $url = $this->services->getUrlLoginFacebook(['email']);
-        header('Location: ' . $url);
+        $this->render('user/login', compact('form'));
     }
 
     public function register()
