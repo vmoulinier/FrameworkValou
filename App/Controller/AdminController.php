@@ -20,7 +20,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        $this->template = 'default';
+        $this->template = 'admin';
         $this->render('admin/index');
     }
 
@@ -50,7 +50,16 @@ class AdminController extends Controller
             }
         }
 
-        $this->template = 'default';
+        $this->template = 'admin';
         $this->render('admin/translations');
+    }
+
+    public function users()
+    {
+        $repo = $this->services->getRepository('user');
+        $users = $repo->findAll();
+
+        $this->template = 'admin';
+        $this->render('admin/users', compact('users'));
     }
 }

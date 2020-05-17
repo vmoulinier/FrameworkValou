@@ -3,23 +3,12 @@
 namespace App\Model;
 
 use App\Entity\User;
-use Core\Services\Services;
 
-class UserRepository
+class UserRepository extends Repository
 {
-    public $entityManager;
-
-    /**
-     * UserRepository constructor.
-     */
-    public function __construct()
-    {
-        $this->entityManager = new Services();
-    }
-
     public function register(string $email, string $password, string $password_verif, string $name, string $firstname, string $facebook = null): array
     {
-        $users = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['email' => $email]);
+        $users = $this->findOneBy(['email' => $email]);
         $error = [];
 
         if(!$users) {
@@ -49,12 +38,13 @@ class UserRepository
             $error[1] = "danger";
             $error[2] = false;
         }
+
         return $error;
     }
 
     public function login(string $email, string $password, bool $facebook = false): bool
     {
-        $user = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['email' =>$email, 'password' =>sha1($password)]);
+        $user = $this->findOneBy(['email' =>$email, 'password' =>sha1($password)]);
         if($user) {
             if ($user->getFacebookId() && !$facebook) {
                 return false;
@@ -71,7 +61,7 @@ class UserRepository
 
     public function loginfb(string $email, string $facebookId): bool
     {
-        $user = $this->entityManager->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['email' =>$email, 'facebook_id' => $facebookId]);
+        $user = $this->findOneBy(['email' =>$email, 'facebook_id' => $facebookId]);
         if($user) {
             if($user->getType() === 'ROLE_ADMIN'){
                 $this->saveSessionAdmin($user->getId(), $user->getType());
@@ -98,7 +88,6 @@ class UserRepository
         }
         return false;
     }
-
 
     private function saveSession(int $id)
     {

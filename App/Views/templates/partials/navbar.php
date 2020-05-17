@@ -15,5 +15,4 @@
         <a class="btn btn-outline-primary mr-1" href="<?= PATH ?>/user/register"><?= $this->twig->translation('home.signup') ?></a>
         <a class="btn btn-outline-primary mr-1" href="<?= PATH ?>/user/login"><?= $this->twig->translation('home.signin') ?></a>
     <?php endif ?>
-    <a class="btn btn-outline-primary" href="<?= PATH ?>/admin/translations"><?= $this->twig->translation('home.translate') ?></a>
 </div>
