@@ -44,7 +44,7 @@ class User
     private $email;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      * @var string
      */
     private $facebook_id;
@@ -169,7 +169,7 @@ class User
      * @param string $facebook_id
      * @return User
      */
-    public function setFacebookId(string $facebook_id): User
+    public function setFacebookId(?string $facebook_id): User
     {
         $this->facebook_id = $facebook_id;
         return $this;

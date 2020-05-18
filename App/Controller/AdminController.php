@@ -58,15 +58,18 @@ class AdminController extends Controller
     {
         $userRepo = $this->services->getRepository('user');
         $adminRepo = $this->services->getRepository('admin');
+        $users = [];
 
         if(!empty($_POST)) {
             if(isset($_POST['login'])) {
                 $adminRepo->login($_POST['login']);
                 $this->redirect('/home/index');
             }
-        }
 
-        $users = $userRepo->findAll();
+            if(isset($_POST['search'])) {
+                $users = $userRepo->search($_POST['name'], $_POST['email'], (int) $_POST['id']);
+            }
+        }
 
         $this->template = 'admin';
         $this->render('admin/users', compact('users'));

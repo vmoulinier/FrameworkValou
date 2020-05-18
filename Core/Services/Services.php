@@ -2,6 +2,7 @@
 
 namespace Core\Services;
 
+use App\Model\Repository;
 use Core\Config;
 use Doctrine\ORM\EntityManager;
 use Mailjet\Resources;
@@ -31,7 +32,7 @@ class Services extends Config
         $this->mailjet->post(Resources::$Email, ['body' => $body]);
     }
 
-    public function getRepository($entity)
+    public function getRepository($entity): Repository
     {
         if(class_exists('\App\Model\\' . ucfirst($entity) . 'Repository')) {
             $repository = '\App\Model\\' . ucfirst($entity) . 'Repository';

@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Core\Services\Services;
+use Doctrine\ORM\EntityRepository;
 
 class Repository
 {
@@ -12,10 +13,10 @@ class Repository
 
     public function __construct()
     {
-        $currentClass = explode('\\', get_class($this));
-        $currentClass = str_replace('Repository', '', $currentClass[2]);
+
         $this->entityManager = new Services();
-        class_exists('App\Entity\\'.$currentClass) ? $this->entityRepository = $this->entityManager->getDoctrine()->getRepository('App\Entity\\'.$currentClass) : $this->entityRepository = null;
+        $this->entityRepository = $this->getEntityRepository();
+
     }
 
     public function find($id, $lockMode = null, $lockVersion = null)
@@ -36,5 +37,16 @@ class Repository
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         return $this->entityRepository->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    private function getEntityRepository(): ?EntityRepository
+    {
+        $currentClass = explode('\\', get_class($this));
+        $currentClass = str_replace('Repository', '', $currentClass[2]);
+
+        if (class_exists('App\Entity\\'.$currentClass)) {
+            return $this->entityManager->getDoctrine()->getRepository('App\Entity\\'.$currentClass);
+        }
+        return null;
     }
 }

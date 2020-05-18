@@ -12,7 +12,7 @@ class UserController extends Controller
     public function login()
     {
         $this->template = 'default';
-        $userrepo = new UserRepository();
+        $userRepo = $this->services->getRepository('user');
         $form = new TemplateForm($_POST);
 
         if (isset($_GET['loginfb'])) {
@@ -23,7 +23,7 @@ class UserController extends Controller
         if(!empty($_POST)) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            if ($userrepo->login($email, $password)) {
+            if ($userRepo->login($email, $password)) {
                 $this->redirect('/user/profil');
             }
             $this->addFlashBag('login.bad.password', 'danger');
@@ -31,7 +31,7 @@ class UserController extends Controller
 
         if (isset($_GET['login'])) {
             $profil = $this->services->getProfilFacebook();
-            $userRepo = $this->services->getRepository('user');
+
             if (!$userRepo->loginfb($profil->getEmail(), $profil->getId())) {
                 $error = $userRepo->register($profil->getEmail(), $profil->getId(), $profil->getId(), $profil->getLastName() , $profil->getFirstName(), $profil->getId());
                 $this->addFlashBag($error[0], $error[1]);
@@ -50,9 +50,9 @@ class UserController extends Controller
     public function register()
     {
         $this->template = 'default';
-        $userrepo = new UserRepository();;
+        $userRepo = $this->services->getRepository('user');
         
-        if($userrepo->islogged()){
+        if($userRepo->islogged()){
             $this->denied();
         }
 
@@ -62,7 +62,7 @@ class UserController extends Controller
             $firstname = $_POST['firstname'];
             $password = $_POST['password'];
             $password_verif = $_POST['password_verif'];
-            $error = $userrepo->register($email, $password, $password_verif, $name, $firstname);
+            $error = $userRepo->register($email, $password, $password_verif, $name, $firstname);
             $this->addFlashBag($error[0], $error[1]);
         }
 
@@ -80,13 +80,14 @@ class UserController extends Controller
     public function profil()
     {
         $this->template = 'default';
-        $userrepo = new UserRepository();
-        if(!$userrepo->islogged()){
+        $userRepo = $this->services->getRepository('user');
+
+        if(!$userRepo->islogged()){
             $this->denied();
         }
 
         $user = $this->getCurrentUser();
-        
+
         $this->render('user/profil', compact('user'));
     }
 }

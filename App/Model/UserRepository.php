@@ -73,6 +73,23 @@ class UserRepository extends Repository
         return false;
     }
 
+    public function search(string $name, string $email, int $id)
+    {
+        $queryBuilder = $this->entityRepository->createQueryBuilder('u');
+
+        return $queryBuilder->select('u')
+            ->where($queryBuilder->expr()->orX(
+                $queryBuilder->expr()->eq('u.name', ':name'),
+                $queryBuilder->expr()->eq('u.email', ':email'),
+                $queryBuilder->expr()->eq('u.id', ':id')
+            ))
+            ->setParameter('name', $name)
+            ->setParameter('email', $email)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function islogged(): bool
     {
         if(isset($_SESSION['user_id'])) {
