@@ -73,7 +73,7 @@ class UserRepository extends Repository
         return false;
     }
 
-    public function search(string $name, string $email, int $id)
+    public function search(string $name, string $email, int $id): array
     {
         $queryBuilder = $this->entityRepository->createQueryBuilder('u');
 

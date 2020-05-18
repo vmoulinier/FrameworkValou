@@ -15,21 +15,21 @@ class UserController extends Controller
         $userRepo = $this->services->getRepository('user');
         $form = new TemplateForm($_POST);
 
-        if (isset($_GET['loginfb'])) {
+        if ($this->request->get('loginfb')) {
             $url = $this->services->getUrlLoginFacebook(['email']);
             header('Location: ' . $url);
         }
 
-        if(!empty($_POST)) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+        if('POST' === $this->request->getMethod()) {
+            $email = $this->request->get('email');
+            $password = $this->request->get('password');
             if ($userRepo->login($email, $password)) {
                 $this->redirect('/user/profil');
             }
             $this->addFlashBag('login.bad.password', 'danger');
         }
 
-        if (isset($_GET['login'])) {
+        if ($this->request->get('login')) {
             $profil = $this->services->getProfilFacebook();
 
             if (!$userRepo->loginfb($profil->getEmail(), $profil->getId())) {
@@ -56,12 +56,12 @@ class UserController extends Controller
             $this->denied();
         }
 
-        if(!empty($_POST)) {
-            $email = $_POST['email'];
-            $name = $_POST['name'];
-            $firstname = $_POST['firstname'];
-            $password = $_POST['password'];
-            $password_verif = $_POST['password_verif'];
+        if('POST' === $this->request->getMethod()) {
+            $email = $this->request->get('email');
+            $name = $this->request->get('name');
+            $firstname = $this->request->get('firstname');
+            $password = $this->request->get('password');
+            $password_verif = $this->request->get('password_verif');
             $error = $userRepo->register($email, $password, $password_verif, $name, $firstname);
             $this->addFlashBag($error[0], $error[1]);
         }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Core\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller
 {
@@ -26,22 +27,30 @@ class AdminController extends Controller
 
     public function translations()
     {
-        if(!empty($_POST)) {
+        if('POST' === $this->request->getMethod()) {
             $repo = $this->services->getRepository('translations');
+            $id = $this->request->get('id');
+            $id_delete = $this->request->get('id_delete');
 
-            if(isset($_POST['id'])) {
-                $repo->updateTranslation();
+            if($id) {
+                $name = $this->request->get('name');
+                $fr = $this->request->get('fr');
+                $en = $this->request->get('en');
+                $repo->updateTranslation($id, $name, $fr, $en);
             }
 
-            if(isset($_POST['add'])) {
-                $repo->addTranslation();
+            if($this->request->get('add')) {
+                $name = $this->request->get('name');
+                $fr = $this->request->get('fr');
+                $en = $this->request->get('en');
+                $repo->addTranslation($name, $fr, $en);
             }
 
-            if(isset($_POST['id_delete'])) {
-                $repo->removeTranslation();
+            if($id_delete) {
+                $repo->removeTranslation($id_delete);
             }
 
-            if(isset($_POST['search'])) {
+            if($this->request->get('search')) {
                 $translation = $_POST['search'];
                 $translations = $repo->findTranslation($translation);
                 $this->template = 'disable';
@@ -60,14 +69,19 @@ class AdminController extends Controller
         $adminRepo = $this->services->getRepository('admin');
         $users = [];
 
-        if(!empty($_POST)) {
-            if(isset($_POST['login'])) {
-                $adminRepo->login($_POST['login']);
+        if('POST' === $this->request->getMethod()) {
+            $id = $this->request->get('login');
+
+            if($id) {
+                $adminRepo->login($id);
                 $this->redirect('/home/index');
             }
 
-            if(isset($_POST['search'])) {
-                $users = $userRepo->search($_POST['name'], $_POST['email'], (int) $_POST['id']);
+            if($this->request->get('search')) {
+                $name = $this->request->get('name');
+                $email = $this->request->get('email');
+                $id = $this->request->get('id');
+                $users = $userRepo->search($name, $email, (int) $id);
             }
         }
 

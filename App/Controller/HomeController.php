@@ -14,4 +14,3 @@ class HomeController extends Controller
         $this->render('home/index', compact('str'));
     }
 }
-

@@ -12,20 +12,20 @@
     <?php foreach ($translations as $translation): ?>
         <tr>
             <td>
-                <div id="name_<?= $translation->id ?>"><?= $translation->name; ?></div>
+                <div id="name_<?= $translation->getId() ?>"><?= $translation->getName(); ?></div>
             </td>
             <td>
-                <div id="fr_<?= $translation->id ?>"><?= $translation->fr; ?></div>
+                <div id="fr_<?= $translation->getId() ?>"><?= $translation->getFr(); ?></div>
             </td>
             <td>
-                <div id="en_<?= $translation->id ?>"><?= $translation->en; ?></div>
+                <div id="en_<?= $translation->getId() ?>"><?= $translation->getEn(); ?></div>
             </td>
             <td>
-                <i class="fas fa-search mr-4 pointer" data-toggle="modal" data-target="#translateModal<?= $translation->id ?>"></i>
-                <i class="fas fa-trash red pointer" id="delete<?= $translation->id ?>"></i>
+                <i class="fas fa-search mr-4 pointer" data-toggle="modal" data-target="#translateModal<?= $translation->getId() ?>"></i>
+                <i class="fas fa-trash red pointer" id="delete<?= $translation->getId() ?>"></i>
             </td>
         </tr>
-        <div class="modal fade" id="translateModal<?= $translation->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="translateModal<?= $translation->getId() ?>" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -34,27 +34,27 @@
                         </button>
                         <br />
                         <label for="name" class="bold"><?= $this->twig->translation('translations.name') ?></label>
-                        <input type="text" name="name" id="name<?= $translation->id ?>" class="form-control" value="<?= $translation->name; ?>">
+                        <input type="text" name="name" id="name<?= $translation->getId() ?>" class="form-control" value="<?= $translation->getName(); ?>">
                         <br />
 
                         <label for="fr" class="bold"><?= $this->twig->translation('translations.fr') ?></label>
-                        <textarea name="fr" id="fr<?= $translation->id ?>" class="form-control"><?= $translation->fr; ?></textarea>
+                        <textarea name="fr" id="fr<?= $translation->getId() ?>" class="form-control"><?= $translation->getFr(); ?></textarea>
                         <br />
 
                         <label for="en" class="bold"><?= $this->twig->translation('translations.en') ?></label>
-                        <textarea name="en" id="en<?= $translation->id ?>" class="form-control"><?= $translation->en; ?></textarea>
+                        <textarea name="en" id="en<?= $translation->getId() ?>" class="form-control"><?= $translation->getEn(); ?></textarea>
                         <br />
-                        <p id="response<?= $translation->id ?>" class="green display"><?= $this->twig->translation('translations.saved') ?></p>
+                        <p id="response<?= $translation->getId() ?>" class="green display"><?= $this->twig->translation('translations.saved') ?></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $this->twig->translation('translations.close') ?></button>
-                        <button type="button" class="btn btn-primary" id="save<?= $translation->id ?>"><?= $this->twig->translation('translations.save') ?></button>
+                        <button type="button" class="btn btn-primary" id="save<?= $translation->getId() ?>"><?= $this->twig->translation('translations.save') ?></button>
                     </div>
                 </div>
             </div>
         </div>
         <script>
-            save('<?= $translation->id ?>');
+            save('<?= $translation->getId() ?>');
         </script>
     <?php endforeach; ?>
     </tbody>

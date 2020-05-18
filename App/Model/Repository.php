@@ -13,10 +13,8 @@ class Repository
 
     public function __construct()
     {
-
         $this->entityManager = new Services();
         $this->entityRepository = $this->getEntityRepository();
-
     }
 
     public function find($id, $lockMode = null, $lockVersion = null)

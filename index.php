@@ -9,9 +9,9 @@ require_once 'env.php';
 App\Autoloader::register();
 Core\Autoloader::register();
 
-if(isset($_GET['p'])){
+if (isset($_GET['p'])) {
     $page = $_GET['p'];
-}else{
+} else {
     $page = 'home/index';
 }
 

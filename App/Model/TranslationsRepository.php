@@ -3,34 +3,33 @@
 namespace App\Model;
 
 use App\Entity\Translations;
-use Core\Services\Services;
 
 class TranslationsRepository extends Repository
 {
-    public function updateTranslation(): void
+    public function updateTranslation(int $id, string $name, string $fr, string $en): void
     {
-        $translation = $this->find($_POST['id']);
-        $translation->setName($_POST['name']);
-        $translation->setFr($_POST['fr']);
-        $translation->setEn($_POST['en']);
+        $translation = $this->find($id);
+        $translation->setName(trim($name));
+        $translation->setFr($fr);
+        $translation->setEn($en);
         $this->entityManager->getDoctrine()->flush();
     }
 
-    public function removeTranslation(): void
+    public function removeTranslation(int $id): void
     {
-        $translation = $this->find($_POST['id_delete']);
+        $translation = $this->find($id);
         $this->entityManager->getDoctrine()->remove($translation);
         $this->entityManager->getDoctrine()->flush();
     }
 
-    public function addTranslation(): void
+    public function addTranslation(string $name, string $fr, string $en): void
     {
-        $translation = $this->findBy(['name' => $_POST['name']]);
+        $translation = $this->findBy(['name' => $name]);
         if(!$translation) {
             $translation = new Translations();
-            $translation->setName(trim($_POST['name']));
-            $translation->setFr($_POST['fr']);
-            $translation->setEn($_POST['en']);
+            $translation->setName(trim($name));
+            $translation->setFr($fr);
+            $translation->setEn($en);
             $this->entityManager->getDoctrine()->persist($translation);
             $this->entityManager->getDoctrine()->flush();
         }
@@ -38,10 +37,17 @@ class TranslationsRepository extends Repository
 
     public function findTranslation(string $name): array
     {
-        $query = 'SELECT * FROM translations WHERE name LIKE :name OR fr LIKE :name OR en LIKE :name LIMIT 5';
-        $req = SPDO::getInstance()->prepare($query);
-        $req->execute([':name' => '%'.$name.'%']);
-        return $req->fetchAll(\PDO::FETCH_OBJ);
+        $queryBuilder = $this->entityRepository->createQueryBuilder('t');
+
+        return $queryBuilder->select('t')
+            ->where($queryBuilder->expr()->orX(
+                $queryBuilder->expr()->eq('t.name', ':name'),
+                $queryBuilder->expr()->eq('t.fr', ':name'),
+                $queryBuilder->expr()->eq('t.en', ':name')
+            ))
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult();
     }
 
 }

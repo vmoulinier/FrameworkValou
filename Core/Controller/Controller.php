@@ -6,6 +6,7 @@ require_once "vendor/autoload.php";
 use App\Model\Repository;
 use Core\Services\Services;
 use Core\Services\Twig;
+use Symfony\Component\HttpFoundation\Request;
 
 class Controller {
 
@@ -14,6 +15,7 @@ class Controller {
     protected $repository;
     protected $services;
     protected $flashBag = [];
+    protected $request;
 
     /**
      * Controller constructor.
@@ -25,6 +27,7 @@ class Controller {
         $this->services = new Services();
         $this->twig = new Twig();
         $this->dataValidator();
+        $this->request = new Request( $_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER);
     }
 
     protected function render($view, $datas = [])
