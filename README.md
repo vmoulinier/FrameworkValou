@@ -41,31 +41,32 @@ The library use is 'AltoRouter'
 
 ```php
 public function routing()
-    {
-        //first param of the map() fuction is the url wanted
-        //second param is the controller and the action called. For example, home/index will call *HomeController* and method *index()*
-        //last param is the name of your route
+{
+    //first param of the map() fuction is the url wanted
+    //second param is the controller and the action called. For example, home/index will call *HomeController* and method *index()*
+    //last param is the name of your route
 
-        //home
-        $this->router->map('GET', '/'.PROJECT_NAME.'/', 'home/index', 'index');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/index', 'home/index', 'home_index');
+    //home
+    $this->router->map('GET', '/'.PROJECT_NAME.'/', 'home/index', 'index');
+    $this->router->map('GET', '/'.PROJECT_NAME.'/index', 'home/index', 'home_index');
 
-        //user
-        $this->router->map('GET', '/'.PROJECT_NAME.'/register', 'user/register', 'user_register');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login');
-        $this->router->map('POST', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login_post');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/logout', 'user/logout', 'user_logout');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/loginfb/[a:fb]?', 'user/loginfb', 'user_loginfb');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/profil', 'user/profil', 'user_profil');
+    //user
+    $this->router->map('GET', '/'.PROJECT_NAME.'/register', 'user/register', 'user_register');
+    $this->router->map('GET', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login');
+    //if your planning to post on this controller, duplicate the route and use POST as first param
+    $this->router->map('POST', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login_post');
+    $this->router->map('GET', '/'.PROJECT_NAME.'/logout', 'user/logout', 'user_logout');
+    $this->router->map('GET', '/'.PROJECT_NAME.'/loginfb/[a:fb]?', 'user/loginfb', 'user_loginfb');
+    $this->router->map('GET', '/'.PROJECT_NAME.'/profil', 'user/profil', 'user_profil');
 
-        //admin
-        $this->router->map('GET', '/'.PROJECT_NAME.'/admin', 'admin/index', 'admin_index');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations');
-        $this->router->map('POST', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations_post');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users');
-        $this->router->map('POST', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users_post');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/admin/relog', 'admin/relog', 'admin_relog');
-    }
+    //admin
+    $this->router->map('GET', '/'.PROJECT_NAME.'/admin', 'admin/index', 'admin_index');
+    $this->router->map('GET', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations');
+    $this->router->map('POST', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations_post');
+    $this->router->map('GET', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users');
+    $this->router->map('POST', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users_post');
+    $this->router->map('GET', '/'.PROJECT_NAME.'/admin/relog', 'admin/relog', 'admin_relog');
+}
 ```
 
 ### Use rooting
@@ -208,7 +209,8 @@ class TranslationsRepository extends Repository
     {
         $doctrine = $this->entityManager->getDoctrine();
     }
-	
+
+}	
 ```
 
 Use doctrine commands
@@ -223,14 +225,13 @@ You can also use mysql without doctrine
 Just call staticly the function getInstance() from the class SPDO in **App/Model/SPDO.php**
 
 ```php
-    public function findTranslation($name)
-    {
-        $query = 'SELECT * FROM translations WHERE nom LIKE :name OR fr LIKE :name OR en LIKE :name LIMIT 5';
-        $req = SPDO::getInstance()->prepare($query);
-        $req->execute([':name' => '%'.$name.'%']);
-        return $req->fetchAll(\PDO::FETCH_OBJ);
-    }
-	
+public function findTranslation($name)
+{
+    $query = 'SELECT * FROM translations WHERE nom LIKE :name OR fr LIKE :name OR en LIKE :name LIMIT 5';
+    $req = SPDO::getInstance()->prepare($query);
+    $req->execute([':name' => '%'.$name.'%']);
+    return $req->fetchAll(\PDO::FETCH_OBJ);
+}
 ```
 
 #### Services
