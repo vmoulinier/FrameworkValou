@@ -8,7 +8,7 @@
 
 Once the project downloaded :
 - install dependency with a composer install
-- configure and rename the **env.php.dist** file
+- configure and rename the **env.php.dist** file in /Core/Config
 
 ```php
 define('PROJECT_NAME', 'FrameworkValou');
@@ -31,10 +31,57 @@ define('DEFAULT_LANGAGE', 'en');
 - run **vendor\bin\doctrine dbal:import data.sql** to import existing translations 
 
 # How it work
+
+## Routing
+### Configure rooting
+
+**Core/Config/Router.php**
+
+The library use is 'AltoRouter'
+
+```php
+public function routing()
+    {
+        //first param of the map() fuction is the url wanted
+        //second param is the controller and the action called. For example, home/index will call *HomeController* and method *index()*
+        //last param is the name of your route
+
+        //home
+        $this->router->map('GET', '/'.PROJECT_NAME.'/', 'home/index', 'index');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/index', 'home/index', 'home_index');
+
+        //user
+        $this->router->map('GET', '/'.PROJECT_NAME.'/register', 'user/register', 'user_register');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login_post');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/logout', 'user/logout', 'user_logout');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/loginfb/[a:fb]?', 'user/loginfb', 'user_loginfb');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/profil', 'user/profil', 'user_profil');
+
+        //admin
+        $this->router->map('GET', '/'.PROJECT_NAME.'/admin', 'admin/index', 'admin_index');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations_post');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users_post');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/admin/relog', 'admin/relog', 'admin_relog');
+    }
+```
+
+### Use rooting
+
+```php
+//for exemple, a login button, url generated will be /PROJECT_NAME/login and will call *UserController* and method *login()*
+<a href="<?= $this->router->generate('user_login') ?>" class="btn btn-success ml-1">Login</a>
+```
+
+More informations about AltoRouter
+https://altorouter.com/
+
 ## Controllers
 ### Use your controller
 
-**App/controller/homecontroller.php**
+**App/controller/HomeController.php**
 
 ```php
 <?php
@@ -47,21 +94,27 @@ class HomeController extends Controller
 {
     public function index()
     {
-	$str = 'Hello World';
-		
-	//choose your template. Default template installed in App/views/templates
+        $str = 'Hello World';
+            
+        //choose your template. Default template installed in App/views/templates. By default, *default* template is selected
         $this->template = 'default'; 
-		
-	//choose your rendering view in this case, on App/views/home/index.php
-	//inject variables to your view
+    
+        //choose the title of your page, by default, this is your PROJECT_NAME
+        $this->title = 'Index page'; 
+    
+        //process form exemple, using request component from http-foundation 
+        if('POST' === $this->request->getMethod()) {
+            $str = $this->request->get('str');
+            //basic flashbag system
+            $this->addFlashBag('Success message', 'success');
+         }
+         
+        //choose your rendering view in this case, on App/views/home/index.php
+        //inject variables to your view
         $this->render('home/index', compact('str'));
     }
 }
 ```
-### Call your controller
-
-![](https://nsa40.casimages.com/img/2020/02/01/200201040150387769.png)
-
 
 ## Views
 ### Use your view
@@ -139,35 +192,21 @@ In a **controller** you just have to
 $this->services->getDoctrine();
 ```
 
-In your repository, just set up the Service in the constructor like this :
+Or if you need to access to a repository
 
 ```php
-class TranslationsRepository
-{
-
-    protected $entityManager;
-
-    /**
-     * UserRepository constructor.
-     */
-    public function __construct()
-    {
-        $this->entityManager = new Services();
-    }
-	
+$this->services->getRepository('user');
 ```
 
-Then just get doctrine like so
+In your repository, just extends class Repository and you can access the entity manager like so :
 
 ```php
+class TranslationsRepository extends Repository
+{
+
     public function test()
     {
-        $translation = new Translations();
-        $translation->setNom('name');
-        $translation->setFr('fr');
-        $translation->setEn('en');
-        $this->entityManager->getDoctrine()->persist($translation);
-        $this->entityManager->getDoctrine()->flush();
+        $doctrine = $this->entityManager->getDoctrine();
     }
 	
 ```
@@ -180,7 +219,7 @@ vendor\bin\doctrine orm:schema-tool:update --force --dump-sql
 
 #### Use mysql
 
-You can also use mysql for specific queries
+You can also use mysql without doctrine
 Just call staticly the function getInstance() from the class SPDO in **App/Model/SPDO.php**
 
 ```php
