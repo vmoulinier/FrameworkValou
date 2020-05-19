@@ -1,7 +1,6 @@
 <?php
 
 namespace Core\Controller;
-require_once "vendor/autoload.php";
 
 use App\Model\Repository;
 use Core\Services\Services;
@@ -12,22 +11,27 @@ class Controller {
 
     protected $path;
     protected $template;
+    protected $title;
     protected $repository;
     protected $services;
     protected $flashBag = [];
     protected $request;
+    protected $router;
 
     /**
      * Controller constructor.
      */
-    public function __construct()
+    public function __construct(\AltoRouter $router)
     {
         $this->path = 'App/Views/';
+        $this->template = 'default';
+        $this->title = PROJECT_NAME;
         $this->repository = new Repository();
         $this->services = new Services();
         $this->twig = new Twig();
+        $this->router = $router;
         $this->dataValidator();
-        $this->request = new Request( $_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER);
+        $this->request = new Request($_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER);
     }
 
     protected function render($view, $datas = [])
@@ -58,7 +62,10 @@ class Controller {
 
     public function redirect($path)
     {
-        header('Location: '.PATH.$path);
+        try {
+            header('Location: ' . $this->router->generate($path));
+        } catch (\Exception $e) {
+        }
     }
 
     public function dataValidator()

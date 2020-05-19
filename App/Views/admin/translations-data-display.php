@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody>
-    <script src="<?= PATH ?>/App/Views/js/translations.js"></script>
+    <script src="<?= PATH ?>/Public/js/translations.js"></script>
     <?php foreach ($translations as $translation): ?>
         <tr>
             <td>

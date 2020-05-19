@@ -11,6 +11,7 @@ class HomeController extends Controller
         $str = 'Hello World';
 
         $this->template = 'default';
+        $this->title = 'Page d\'accueil';
         $this->render('home/index', compact('str'));
     }
 }

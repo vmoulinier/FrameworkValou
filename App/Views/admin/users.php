@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-3">
                         <label>&nbsp;</label><br />
-                        <button type="submit" class="btn btn-success" name="search"><?= $this->twig->translation('admin.users.find.validate') ?></button>
+                        <button type="submit" class="btn btn-success" name="search" value="1"><?= $this->twig->translation('admin.users.find.validate') ?></button>
                     </div>
                 </div>
                 </form>

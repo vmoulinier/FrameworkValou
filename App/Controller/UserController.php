@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Model\UserRepository;
 use Core\Controller\Controller;
 use Core\HTML\TemplateForm;
 
@@ -14,8 +13,9 @@ class UserController extends Controller
         $this->template = 'default';
         $userRepo = $this->services->getRepository('user');
         $form = new TemplateForm($_POST);
+        $fb = $this->request->get('login/loginfb');
 
-        if ($this->request->get('loginfb')) {
+        if (isset($fb)) {
             $url = $this->services->getUrlLoginFacebook(['email']);
             header('Location: ' . $url);
         }
@@ -24,27 +24,34 @@ class UserController extends Controller
             $email = $this->request->get('email');
             $password = $this->request->get('password');
             if ($userRepo->login($email, $password)) {
-                $this->redirect('/user/profil');
+                $this->redirect('user_profil');
             }
             $this->addFlashBag('login.bad.password', 'danger');
         }
 
-        if ($this->request->get('login')) {
+        $this->render('user/login', compact('form'));
+    }
+
+    public function loginfb()
+    {
+        $userRepo = $this->services->getRepository('user');
+
+        if ($this->request->get('code')) {
             $profil = $this->services->getProfilFacebook();
 
             if (!$userRepo->loginfb($profil->getEmail(), $profil->getId())) {
                 $error = $userRepo->register($profil->getEmail(), $profil->getId(), $profil->getId(), $profil->getLastName() , $profil->getFirstName(), $profil->getId());
                 $this->addFlashBag($error[0], $error[1]);
                 if (!$error[2]) {
+                    $this->template = 'default';
+                    $form = new TemplateForm($_POST);
                     $this->render('user/login', compact('form'));
                     die;
                 }
                 $userRepo->login($profil->getEmail(), $profil->getId(), true);
             }
-            $this->redirect('/user/profil');
+            $this->redirect('user_profil');
         }
-
-        $this->render('user/login', compact('form'));
     }
 
     public function register()
@@ -74,7 +81,7 @@ class UserController extends Controller
     {
         session_destroy();
         unset($_SESSION['user_id']);
-        $this->redirect('/home/index');
+        $this->redirect('index');
     }
 
     public function profil()

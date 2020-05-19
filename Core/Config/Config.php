@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Config;
 
 use Mailjet\Client;
 

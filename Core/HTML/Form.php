@@ -2,7 +2,7 @@
 
 namespace Core\HTML;
 
-class Form{
+class Form {
 
     private $data;
 

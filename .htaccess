@@ -2,15 +2,12 @@ Options -Indexes
 
 RewriteEngine On
 
-RewriteRule "^([a-z0-9-_/]+)/$" "index.php?p=$1" [L,QSA]
-RewriteRule "^([a-z0-9-_/]+)/([0-9-_]+)" "index.php?p=$1&id=$2" [L,QSA]
-RewriteRule "^([a-z0-9-_/]+)$" "index.php?p=$1" [L,QSA]
+RewriteRule "^([a-z0-9-_/]+)$" "index.php?$1" [L,QSA]
 
-### If you use HTTPS, uncomment below S###
-
-#RewriteCond %{HTTPS} off
-#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
-#RewriteCond %{HTTP_HOST} !=""
-#RewriteCond %{HTTP_HOST} !^www\. [NC]
-#RewriteCond %{HTTPS}s ^on(s)|
-#RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+<Files ~ "\.(json|lock)$">
+   Deny from all
+</Files>
+<Files "cli-config.php">
+  Order Allow,Deny
+  Deny from all
+</Files>

@@ -160,7 +160,7 @@ class User
     /**
      * @return string
      */
-    public function getFacebookId(): string
+    public function getFacebookId(): ?string
     {
         return $this->facebook_id;
     }

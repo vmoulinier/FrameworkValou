@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use App\Entity\User;
-
 class AdminRepository extends Repository
 {
     public function login(int $id): void

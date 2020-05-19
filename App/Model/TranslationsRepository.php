@@ -41,11 +41,12 @@ class TranslationsRepository extends Repository
 
         return $queryBuilder->select('t')
             ->where($queryBuilder->expr()->orX(
-                $queryBuilder->expr()->eq('t.name', ':name'),
-                $queryBuilder->expr()->eq('t.fr', ':name'),
-                $queryBuilder->expr()->eq('t.en', ':name')
+                $queryBuilder->expr()->like('t.name', ':name'),
+                $queryBuilder->expr()->like('t.fr', ':name'),
+                $queryBuilder->expr()->like('t.en', ':name')
             ))
-            ->setParameter('name', $name)
+            ->setMaxResults(5)
+            ->setParameter('name', '%'.$name.'%')
             ->getQuery()
             ->getResult();
     }

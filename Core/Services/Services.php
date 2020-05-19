@@ -3,11 +3,11 @@
 namespace Core\Services;
 
 use App\Model\Repository;
-use Core\Config;
+use Core\Config\Config;
 use Doctrine\ORM\EntityManager;
 use Mailjet\Resources;
 
-require_once 'Core/Config.php';
+require_once 'Core/Config/Config.php';
 
 class Services extends Config
 {
@@ -49,7 +49,7 @@ class Services extends Config
 
     public function getUrlLoginFacebook($scope): string
     {
-        return $this->helper->getLoginUrl(PATH .'/user/login?login=true', $scope);
+        return $this->helper->getLoginUrl(PATH .'/loginfb/', $scope);
     }
 
     public function getProfilFacebook()

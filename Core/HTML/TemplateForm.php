@@ -2,7 +2,7 @@
 
 namespace Core\HTML;
 
-class TemplateForm extends Form{
+class TemplateForm extends Form {
     
     protected function surround($html)
     {

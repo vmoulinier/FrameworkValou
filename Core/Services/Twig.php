@@ -2,7 +2,7 @@
 
 namespace Core\Services;
 
-use Core\Config;
+use Core\Config\Config;
 
 class Twig extends Config
 {
@@ -25,7 +25,7 @@ class Twig extends Config
         return false;
     }
 
-    public function translation($name, $params = [])
+    public function translation(string $name, array $params = []): string
     {
         $translation = $this->entityManager->getRepository('App\Entity\Translations')->findOneBy(['name' => $name]);
         if ($translation) {

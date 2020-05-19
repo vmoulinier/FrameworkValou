@@ -4,7 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><?= PROJECT_NAME ?></title>
+    <title><?= $this->title ?></title>
+    <link rel="icon" type="image/png" href="<?= URL_LOGO ?>" />
     <link href="<?= PATH ?>/Public/css/bootstrap.css" rel="stylesheet">
     <link href="<?= PATH ?>/Public/css/bootstrap-social.css" rel="stylesheet">
     <link href="<?= PATH ?>/Public/css/styles.css?v=<?=time();?>" rel="stylesheet">
