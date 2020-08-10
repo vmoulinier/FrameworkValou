@@ -11,9 +11,9 @@ class Repository
 
     protected $entityRepository;
 
-    public function __construct()
+    public function __construct(Services $services)
     {
-        $this->entityManager = new Services();
+        $this->entityManager = $services;
         $this->entityRepository = $this->getEntityRepository();
     }
 

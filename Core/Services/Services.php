@@ -36,7 +36,7 @@ class Services extends Config
     {
         if(class_exists('\App\Model\\' . ucfirst($entity) . 'Repository')) {
             $repository = '\App\Model\\' . ucfirst($entity) . 'Repository';
-            return new $repository();
+            return new $repository($this);
         }
 
         throw new \Error('repository not found');
@@ -67,4 +67,16 @@ class Services extends Config
         }
     }
 
+    public function isNavActive(array $urls)
+    {
+        $get = explode('/', array_key_first ($_GET))[0];
+
+        foreach ($urls as $url) {
+            if(isset($get) && $get === $url) {
+                return 'active';
+            }
+        }
+
+        return '';
+    }
 }

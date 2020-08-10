@@ -51,6 +51,7 @@ class Router {
         $action = $target[1];
 
         $controller = new $controller($this->router);
-        $controller->$action();
+        $params = $match['params'] ?? [];
+        $controller->$action($params);
     }
 }

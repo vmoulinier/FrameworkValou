@@ -26,8 +26,8 @@ class Controller {
         $this->path = 'App/Views/';
         $this->template = 'default';
         $this->title = PROJECT_NAME;
-        $this->repository = new Repository();
         $this->services = new Services();
+        $this->repository = new Repository($this->services);
         $this->twig = new Twig();
         $this->router = $router;
         $this->dataValidator();
@@ -72,7 +72,9 @@ class Controller {
     {
         if(!empty($_POST)) {
             foreach ($_POST as $key => $data) {
-                $_POST[$key] = htmlspecialchars($data);
+                if (!is_array($data)) {
+                    $_POST[$key] = htmlspecialchars($data);
+                }
             }
         }
     }

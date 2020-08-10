@@ -3,21 +3,31 @@
 namespace Core\HTML;
 
 class TemplateForm extends Form {
-    
+
     protected function surround($html)
     {
         return "<div class=\"form-group\">{$html}</div>";
     }
-    
+
+    protected function surroundCheckbox($html)
+    {
+        return "<div class=\"form-check\">{$html}</div>";
+    }
+
     public function input($name, $label, $options = [])
     {
         $type = isset($options['type']) ? $options['type'] : 'text';
-        $required = isset($options['required']) === 'false' ? ' ' : 'required';
-        if($type === 'textarea'){
-            $input = '<textarea name="' . $name . '" class="form-control" '. $required .'>' . $name . '</textarea>';
+        $required = isset($options['required']) == 'false' ? ' ' : 'required';
+        if ($type === 'textarea') {
+            $txt = isset($_POST[$name]) ? $_POST[$name] : '';
+            $input = '<textarea rows=5 name="' . $name . '" class="form-control" '. $required .'>' . $txt . '</textarea>';
         } elseif ($type === 'hidden') {
             return '<input type="' . $type . '" name="' . $name . '" value="' . $label . '">';
-        } else{
+        } elseif ($type === 'checkbox') {
+            $label = '<label class="form-check-label" for="'.$name.'">' . $label . '</label>';
+            $input = '<input type="' . $type . '" name="' . $name . '" class="form-check-input"  '. $required .' id="'.$name.'">';
+            return $this->surroundCheckbox($input. $label );
+        } else {
             $input = '<input type="' . $type . '" name="' . $name . '" class="form-control"  '. $required .'>';
         }
         $label = '<label>' . $label . '</label>';
@@ -38,13 +48,13 @@ class TemplateForm extends Form {
         $input .= '</select>';
         return $this->surround($label . $input);
     }
-    
+
     public function submit($value, $name = false)
     {
         if($name) {
-            return $this->surround('<button type="submit" name="'.$name.'" class="btn btn-primary" style="white-space: normal;">'.$value.'</button>');
+            return $this->surround('<button type="submit" name="'.$name.'" class="btn primary-btn" style="white-space: normal;">'.$value.'</button>');
         } else {
-            return $this->surround('<button type="submit" class="btn btn-primary">'.$value.'</button>');
+            return $this->surround('<button type="submit" class="btn primary-btn">'.$value.'</button>');
         }
     }
 }
