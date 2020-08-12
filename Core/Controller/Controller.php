@@ -55,7 +55,7 @@ class Controller {
     {
         if(isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
-            return $this->services->getDoctrine()->getRepository('App\Entity\User')->find($id);
+            return $this->services->getEntityManager()->getRepository('App\Entity\User')->find($id);
         }
         return false;
     }

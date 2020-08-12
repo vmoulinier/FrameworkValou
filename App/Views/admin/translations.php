@@ -37,7 +37,7 @@
         </div>
     </div>
 </div>
-<script src="<?= PATH ?>/App/Views/js/translations.js"></script>
+<script src="<?= PATH ?>/Public/js/translations.js"></script>
 <script>
     $(document).ready(search());
 </script>

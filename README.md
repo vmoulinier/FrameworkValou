@@ -190,7 +190,7 @@ Doctrine can be called from the class Services in **Core/Services/Services.php**
 In a **controller** you just have to
 
 ```php
-$this->services->getDoctrine();
+$this->services->getEntityManager();
 ```
 
 Or if you need to access to a repository
@@ -207,7 +207,7 @@ class TranslationsRepository extends Repository
 
     public function test()
     {
-        $doctrine = $this->entityManager->getDoctrine();
+        $em = $this->entityManager->getEntityManager();
     }
 
 }	
@@ -237,4 +237,59 @@ public function findTranslation($name)
 #### Services
 
 The class Services is in **Core/Services/Services.php**
-You can setup your services, and config them in the Config class  **Core/Config.php**
+
+Just extends the Services class on your new service in **App/Services/**
+To call a service on a controler, you just have to
+
+```php
+$this->services->getService('facebook');
+```
+
+Or in another service 
+
+```php
+$this->getService('facebook');
+```
+
+Example :
+```php
+<?php
+
+namespace App\Services;
+
+use Core\Services\Services;
+
+class FacebookService extends Services
+{
+
+    protected $helper;
+
+    protected $fb;
+
+    private $mailjetService;
+
+    /**
+     * FacebookService constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        //facebook
+        $fb = new \Facebook\Facebook([
+            'app_id' => FACEBOOK_APIKEY,
+            'app_secret' => FACEBOOK_API_SECRET,
+            'default_graph_version' => 'v2.10',
+            //'default_access_token' => '{access-token}', // optional
+        ]);
+        $this->helper = $fb->getRedirectLoginHelper();
+        $this->fb = $fb;
+        //use another service on your service
+        $this->mailjetService = $this->getService('mailjet');
+    }
+
+    public function getUrlLoginFacebook($scope): string
+    {
+        return $this->helper->getLoginUrl(PATH .'/loginfb/', $scope);
+    }
+}
+```

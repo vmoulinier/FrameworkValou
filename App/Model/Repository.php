@@ -43,7 +43,7 @@ class Repository
         $currentClass = str_replace('Repository', '', $currentClass[2]);
 
         if (class_exists('App\Entity\\'.$currentClass)) {
-            return $this->entityManager->getDoctrine()->getRepository('App\Entity\\'.$currentClass);
+            return $this->entityManager->getEntityManager()->getRepository('App\Entity\\'.$currentClass);
         }
         return null;
     }

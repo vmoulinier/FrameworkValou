@@ -26,7 +26,7 @@ class AdminController extends Controller
     public function translations()
     {
         if('POST' === $this->request->getMethod()) {
-            $repo = $this->services->getRepository('translations');
+            $translationsService = $this->services->getService('translations');
             $id = $this->request->get('id');
             $id_delete = $this->request->get('id_delete');
             $search = $this->request->get('search');
@@ -35,22 +35,22 @@ class AdminController extends Controller
                 $name = $this->request->get('name');
                 $fr = $this->request->get('fr');
                 $en = $this->request->get('en');
-                $repo->updateTranslation($id, $name, $fr, $en);
+                $translationsService->updateTranslation($id, $name, $fr, $en);
             }
 
             if($this->request->get('add')) {
                 $name = $this->request->get('name');
                 $fr = $this->request->get('fr');
                 $en = $this->request->get('en');
-                $repo->addTranslation($name, $fr, $en);
+                $translationsService->addTranslation($name, $fr, $en);
             }
 
             if($id_delete) {
-                $repo->removeTranslation($id_delete);
+                $translationsService->removeTranslation($id_delete);
             }
 
             if($search) {
-                $translations = $repo->findTranslation($search);
+                $translations = $this->services->getRepository('translations')->findTranslation($search);
                 $this->template = 'disable';
                 $this->render('admin/translations-data-display', compact('translations'));
                 die;

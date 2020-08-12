@@ -23,8 +23,8 @@ class UserRepository extends Repository
                 if (ENV === 'dev') {
                     $user->setType('ROLE_ADMIN');
                 }
-                $this->entityManager->getDoctrine()->persist($user);
-                $this->entityManager->getDoctrine()->flush();
+                $this->entityManager->getEntityManager()->persist($user);
+                $this->entityManager->getEntityManager()->flush();
                 $error[0] = "account.register.success";
                 $error[1] = "success";
                 $error[2] = true;
@@ -49,20 +49,6 @@ class UserRepository extends Repository
             if ($user->getFacebookId() && !$facebook) {
                 return false;
             }
-            if($user->getType() === 'ROLE_ADMIN'){
-                $this->saveSessionAdmin($user->getId(), $user->getType());
-                return true;
-            }
-            $this->saveSession($user->getId());
-            return true;
-        }
-        return false;
-    }
-
-    public function loginfb(string $email, string $facebookId): bool
-    {
-        $user = $this->findOneBy(['email' =>$email, 'facebook_id' => $facebookId]);
-        if($user) {
             if($user->getType() === 'ROLE_ADMIN'){
                 $this->saveSessionAdmin($user->getId(), $user->getType());
                 return true;

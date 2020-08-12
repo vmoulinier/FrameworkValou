@@ -8,7 +8,7 @@ require_once 'Core/Services/Services.php';
 require_once 'Core/Config/env.php';
 
 $services = new Services();
-$entityManager = $services->getDoctrine();
+$entityManager = $services->getEntityManager();
 
 return ConsoleRunner::createHelperSet($entityManager);
 

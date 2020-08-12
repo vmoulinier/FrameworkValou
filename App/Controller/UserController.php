@@ -14,9 +14,10 @@ class UserController extends Controller
         $userRepo = $this->services->getRepository('user');
         $form = new TemplateForm($_POST);
         $fb = $this->request->get('login/loginfb');
+        $facebookService =  $this->services->getService('facebook');
 
         if (isset($fb)) {
-            $url = $this->services->getUrlLoginFacebook(['email']);
+            $url = $facebookService->getUrlLoginFacebook(['email']);
             header('Location: ' . $url);
         }
 
@@ -35,11 +36,11 @@ class UserController extends Controller
     public function loginfb()
     {
         $userRepo = $this->services->getRepository('user');
-
+        $facebookService =  $this->services->getService('facebook');
         if ($this->request->get('code')) {
-            $profil = $this->services->getProfilFacebook();
+            $profil = $facebookService->getProfilFacebook();
 
-            if (!$userRepo->loginfb($profil->getEmail(), $profil->getId())) {
+            if (!$facebookService->loginfb($profil->getEmail(), $profil->getId())) {
                 $error = $userRepo->register($profil->getEmail(), $profil->getId(), $profil->getId(), $profil->getLastName() , $profil->getFirstName(), $profil->getId());
                 $this->addFlashBag($error[0], $error[1]);
                 if (!$error[2]) {
