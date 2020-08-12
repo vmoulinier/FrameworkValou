@@ -239,6 +239,7 @@ public function findTranslation($name)
 The class Services is in **Core/Services/Services.php**
 
 Just extends the Services class on your new service in **App/Services/**
+
 To call a service on a controler, you just have to
 
 ```php
