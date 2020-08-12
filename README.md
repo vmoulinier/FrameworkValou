@@ -284,7 +284,7 @@ class FacebookService extends Services
         ]);
         $this->helper = $fb->getRedirectLoginHelper();
         $this->fb = $fb;
-        //use another service on your service
+        //use another service in your service
         $this->mailjetService = $this->getService('mailjet');
     }
 
