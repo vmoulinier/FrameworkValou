@@ -240,7 +240,7 @@ The class Services is in **Core/Services/Services.php**
 
 Just extends the Services class on your new service in **App/Services/**
 
-To call a service on a controler, you just have to
+To call a service in a controller, you just have to
 
 ```php
 $this->services->getService('facebook');
