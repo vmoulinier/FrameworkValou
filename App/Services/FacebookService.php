@@ -2,46 +2,17 @@
 
 namespace App\Services;
 
-use Core\Services\Services;
+use Facebook\Facebook;
+use Facebook\Helpers\FacebookRedirectLoginHelper;
 
-class FacebookService extends Services
+class FacebookService extends Service
 {
-
-    protected $helper;
-
-    protected $fb;
-
-    private $mailjetService;
-
-    /**
-     * FacebookService constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        //facebook
-        $fb = new \Facebook\Facebook([
-            'app_id' => FACEBOOK_APIKEY,
-            'app_secret' => FACEBOOK_API_SECRET,
-            'default_graph_version' => 'v2.10',
-            //'default_access_token' => '{access-token}', // optional
-        ]);
-        $this->helper = $fb->getRedirectLoginHelper();
-        $this->fb = $fb;
-        //use another service on your service
-        $this->mailjetService = $this->getService('mailjet');
-    }
-
-    public function getUrlLoginFacebook($scope): string
-    {
-        return $this->helper->getLoginUrl(PATH .'/loginfb/', $scope);
-    }
 
     public function getProfilFacebook()
     {
         try {
-            $accessToken = $this->helper->getAccessToken();
-            $response = $this->fb->get('/me?fields=email,first_name,last_name,gender', $accessToken->getValue());
+            $accessToken = $this->getHelper()->getAccessToken();
+            $response = $this->getFacebook()->get('/me?fields=email,first_name,last_name,gender', $accessToken->getValue());
             return $response->getGraphUser();
         } catch (FacebookResponseException  $e) {
             echo 'Graph returned an error: ' . $e->getMessage();
@@ -75,5 +46,30 @@ class FacebookService extends Services
     {
         $_SESSION['user_id'] = $id;
         $_SESSION['user_role_admin'] = $role;
+    }
+
+    public function getMalilJetService()
+    {
+        return $this->getService('mailjet');
+    }
+
+    public function getUrlLoginFacebook($scope): string
+    {
+        return $this->getHelper()->getLoginUrl(PATH .'/loginfb/', $scope);
+    }
+
+    public function getFacebook(): Facebook
+    {
+        return new \Facebook\Facebook([
+            'app_id' => FACEBOOK_APIKEY,
+            'app_secret' => FACEBOOK_API_SECRET,
+            'default_graph_version' => 'v2.10',
+            //'default_access_token' => '{access-token}', // optional
+        ]);
+    }
+
+    public function getHelper(): FacebookRedirectLoginHelper
+    {
+        return $this->getFacebook()->getRedirectLoginHelper();
     }
 }

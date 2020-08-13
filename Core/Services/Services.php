@@ -3,6 +3,7 @@
 namespace Core\Services;
 
 use App\Model\Repository;
+use App\Services\Service;
 use Core\Config\Config;
 use Doctrine\ORM\EntityManager;
 
@@ -20,11 +21,11 @@ class Services extends Config
         throw new \Error('repository not found');
     }
 
-    public function getService($name)
+    public function getService($name): Service
     {
         if(class_exists('\App\Services\\' . ucfirst($name) . 'Service')) {
             $service = '\App\Services\\' . ucfirst($name) . 'Service';
-            return new $service();
+            return new $service($this);
         }
 
         throw new \Error('Service not found');
