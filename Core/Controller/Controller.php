@@ -2,6 +2,7 @@
 
 namespace Core\Controller;
 
+use App\Entity\User;
 use App\Model\Repository;
 use Core\Services\Services;
 use Core\Services\Twig;
@@ -14,6 +15,7 @@ class Controller {
     protected $title;
     protected $repository;
     protected $services;
+    protected $twig;
     protected $flashBag = [];
     protected $request;
     protected $router;
@@ -27,7 +29,6 @@ class Controller {
         $this->template = 'default';
         $this->title = PROJECT_NAME;
         $this->services = new Services();
-        $this->repository = new Repository($this->services);
         $this->twig = new Twig();
         $this->router = $router;
         $this->dataValidator();
@@ -51,13 +52,13 @@ class Controller {
         die;
     }
 
-    public function getCurrentUser()
+    public function getCurrentUser(): ?User
     {
         if(isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
-            return $this->services->getEntityManager()->getRepository('App\Entity\User')->find($id);
+            return $this->services->getRepository('user')->find($id);
         }
-        return false;
+        return null;
     }
 
     public function redirect($path)
