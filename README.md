@@ -236,9 +236,9 @@ public function findTranslation($name)
 
 #### Services
 
-The class Services is in **Core/Services/Services.php**
+The class Service is in **App/Services/Service.php**
 
-Just extends the Services class on your new service in **App/Services/**
+Just extends the Service class on your new service in **App/Services/**
 
 To call a service in a controller, you just have to
 
@@ -258,39 +258,34 @@ Example :
 
 namespace App\Services;
 
-use Core\Services\Services;
+use Facebook\Facebook;
+use Facebook\Helpers\FacebookRedirectLoginHelper;
 
-class FacebookService extends Services
+class FacebookService extends Service
 {
-
-    protected $helper;
-
-    protected $fb;
-
-    private $mailjetService;
-
-    /**
-     * FacebookService constructor.
-     */
-    public function __construct()
+    public function getMalilJetService()
     {
-        parent::__construct();
-        //facebook
-        $fb = new \Facebook\Facebook([
+        return $this->getService('mailjet');
+    }
+
+    public function getFacebook(): Facebook
+    {
+        return new \Facebook\Facebook([
             'app_id' => FACEBOOK_APIKEY,
             'app_secret' => FACEBOOK_API_SECRET,
             'default_graph_version' => 'v2.10',
             //'default_access_token' => '{access-token}', // optional
         ]);
-        $this->helper = $fb->getRedirectLoginHelper();
-        $this->fb = $fb;
-        //use another service in your service
-        $this->mailjetService = $this->getService('mailjet');
+    }
+
+    public function getHelper(): FacebookRedirectLoginHelper
+    {
+        return $this->getFacebook()->getRedirectLoginHelper();
     }
 
     public function getUrlLoginFacebook($scope): string
     {
-        return $this->helper->getLoginUrl(PATH .'/loginfb/', $scope);
+        return $this->getHelper()->getLoginUrl(PATH .'/loginfb/', $scope);
     }
 }
 ```
