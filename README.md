@@ -258,34 +258,46 @@ Example :
 
 namespace App\Services;
 
-use Facebook\Facebook;
-use Facebook\Helpers\FacebookRedirectLoginHelper;
+use Core\Services\Services;
 
 class FacebookService extends Service
 {
-    public function getMalilJetService()
-    {
-        return $this->getService('mailjet');
-    }
 
-    public function getFacebook(): Facebook
+    private $fb;
+
+    private $helper;
+
+    private $mj;
+
+    /**
+     * FacebookService constructor.
+     */
+    public function __construct(Services $services)
     {
-        return new \Facebook\Facebook([
+        parent::__construct($services);
+        $this->fb = new \Facebook\Facebook([
             'app_id' => FACEBOOK_APIKEY,
             'app_secret' => FACEBOOK_API_SECRET,
             'default_graph_version' => 'v2.10',
             //'default_access_token' => '{access-token}', // optional
         ]);
+        $this->helper = $this->fb->getRedirectLoginHelper();
+        $this->mj = $this->services->getService('mailjet');
     }
 
-    public function getHelper(): FacebookRedirectLoginHelper
+    public function getProfilFacebook()
     {
-        return $this->getFacebook()->getRedirectLoginHelper();
-    }
-
-    public function getUrlLoginFacebook($scope): string
-    {
-        return $this->getHelper()->getLoginUrl(PATH .'/loginfb/', $scope);
+        try {
+            $accessToken = $this->helper->getAccessToken();
+            $response = $this->fb->get('/me?fields=email,first_name,last_name,gender', $accessToken->getValue());
+            return $response->getGraphUser();
+        } catch (FacebookResponseException  $e) {
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch(FacebookSDKException $e) {
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
     }
 }
 ```
