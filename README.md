@@ -195,10 +195,10 @@ Or if you need to access to a repository
 $this->services->getRepository('user');
 ```
 
-In your repository, just extends class Repository and you can access the entity manager like so :
+In your repository, just extends class BaseRepository and you can access the entity manager like so :
 
 ```php
-class TranslationsRepository extends Repository
+class TranslationsRepository extends BaseRepository
 {
 
     public function test()
