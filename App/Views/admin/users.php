@@ -1,4 +1,4 @@
-<h2 class="center"><?= $this->twig->translation('admin.users') ?></h2>
+<h2 class="center"><?= $this->translation('admin.users') ?></h2>
 <div class="row mt-4">
     <div class="col-12">
         <div class="card mb-4">
@@ -6,20 +6,20 @@
                 <form method="POST">
                 <div class="row">
                     <div class="col-3">
-                        <label><?= $this->twig->translation('admin.users.find.id') ?></label><br />
+                        <label><?= $this->translation('admin.users.find.id') ?></label><br />
                         <input type="number" class="form-control" name="id">
                     </div>
                     <div class="col-3">
-                        <label><?= $this->twig->translation('admin.users.find.email') ?></label><br />
+                        <label><?= $this->translation('admin.users.find.email') ?></label><br />
                         <input type="text" class="form-control" name="email">
                     </div>
                     <div class="col-3">
-                        <label><?= $this->twig->translation('admin.users.find.name') ?></label><br />
+                        <label><?= $this->translation('admin.users.find.name') ?></label><br />
                         <input type="text" class="form-control" name="name">
                     </div>
                     <div class="col-3">
                         <label>&nbsp;</label><br />
-                        <button type="submit" class="btn btn-success" name="search" value="1"><?= $this->twig->translation('admin.users.find.validate') ?></button>
+                        <button type="submit" class="btn btn-success" name="search" value="1"><?= $this->translation('admin.users.find.validate') ?></button>
                     </div>
                 </div>
                 </form>

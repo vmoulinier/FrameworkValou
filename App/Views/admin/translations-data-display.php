@@ -33,22 +33,22 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <br />
-                        <label for="name" class="bold"><?= $this->twig->translation('translations.name') ?></label>
+                        <label for="name" class="bold"><?= $this->translation('translations.name') ?></label>
                         <input type="text" name="name" id="name<?= $translation->getId() ?>" class="form-control" value="<?= $translation->getName(); ?>">
                         <br />
 
-                        <label for="fr" class="bold"><?= $this->twig->translation('translations.fr') ?></label>
+                        <label for="fr" class="bold"><?= $this->translation('translations.fr') ?></label>
                         <textarea name="fr" id="fr<?= $translation->getId() ?>" class="form-control"><?= $translation->getFr(); ?></textarea>
                         <br />
 
-                        <label for="en" class="bold"><?= $this->twig->translation('translations.en') ?></label>
+                        <label for="en" class="bold"><?= $this->translation('translations.en') ?></label>
                         <textarea name="en" id="en<?= $translation->getId() ?>" class="form-control"><?= $translation->getEn(); ?></textarea>
                         <br />
-                        <p id="response<?= $translation->getId() ?>" class="green display"><?= $this->twig->translation('translations.saved') ?></p>
+                        <p id="response<?= $translation->getId() ?>" class="green display"><?= $this->translation('translations.saved') ?></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $this->twig->translation('translations.close') ?></button>
-                        <button type="button" class="btn btn-primary" id="save<?= $translation->getId() ?>"><?= $this->twig->translation('translations.save') ?></button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $this->translation('translations.close') ?></button>
+                        <button type="button" class="btn btn-primary" id="save<?= $translation->getId() ?>"><?= $this->translation('translations.save') ?></button>
                     </div>
                 </div>
             </div>

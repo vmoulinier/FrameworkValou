@@ -64,7 +64,7 @@ class Controller {
     public function redirect($path)
     {
         try {
-            header('Location: ' . $this->router->generate($path));
+            header('Location: ' . $this->url($path));
         } catch (\Exception $e) {
         }
     }
@@ -78,6 +78,16 @@ class Controller {
                 }
             }
         }
+    }
+
+    public function url(string $routeName, array $params = [])
+    {
+        return $this->router->generate($routeName, $params);
+    }
+
+    public function translation(string $name, array $params = [])
+    {
+        return $this->twig->translation($name, $params);
     }
 
     public function addFlashBag($content, $type = 'success')

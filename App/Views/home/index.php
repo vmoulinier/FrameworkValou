@@ -1,2 +1,3 @@
-<h2 class="center"><?= $this->twig->translation('index.title') ?></h2>
+<h2 class="center"><?= $this->translation('index.title') ?></h2>
 <p class="center"><?= $str ?></p>
+<?= $this->path ?>
