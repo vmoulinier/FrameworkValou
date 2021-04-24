@@ -23,18 +23,15 @@ class Router {
 
         //user
         $this->router->map('GET', '/'.PROJECT_NAME.'/register', 'user/register', 'user_register');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login');
-        $this->router->map('POST', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login_post');
+        $this->router->map('GET|POST', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login');
         $this->router->map('GET', '/'.PROJECT_NAME.'/logout', 'user/logout', 'user_logout');
         $this->router->map('GET', '/'.PROJECT_NAME.'/loginfb/[a:fb]?', 'user/loginfb', 'user_loginfb');
         $this->router->map('GET', '/'.PROJECT_NAME.'/profil', 'user/profil', 'user_profil');
 
         //admin
         $this->router->map('GET', '/'.PROJECT_NAME.'/admin', 'admin/index', 'admin_index');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations');
-        $this->router->map('POST', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations_post');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users');
-        $this->router->map('POST', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users_post');
+        $this->router->map('GET|POST', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations');
+        $this->router->map('GET|POST', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users');
         $this->router->map('GET', '/'.PROJECT_NAME.'/admin/relog', 'admin/relog', 'admin_relog');
     }
 

@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace Core\Config;
 
-use App\Model\Repository;
+use Core\Config\Repository;
 use Core\Services\Services;
 use Doctrine\ORM\EntityManager;
 
-class Service
+class BaseServices
 {
-
     protected $services;
 
     /**
@@ -24,9 +23,14 @@ class Service
         return $this->services->getEntityManager();
     }
 
-    public function getService(string $name): Service
+    public function getService(string $name): BaseServices
     {
         return $this->services->getService($name);
+    }
+
+    public function getManager(string $name): BaseServices
+    {
+        return $this->services->getManager($name);
     }
 
     public function getRepository(string $entity): Repository

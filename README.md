@@ -33,7 +33,7 @@ define('DEFAULT_LANGAGE', 'en');
 # How it work
 
 ## Routing
-### Configure rooting
+### Configure routing
 
 **Core/Config/Router.php**
 
@@ -49,31 +49,27 @@ public function routing()
     //home
     $this->router->map('GET', '/'.PROJECT_NAME.'/', 'home/index', 'index');
     $this->router->map('GET', '/'.PROJECT_NAME.'/index', 'home/index', 'home_index');
-
+    
     //user
     $this->router->map('GET', '/'.PROJECT_NAME.'/register', 'user/register', 'user_register');
-    $this->router->map('GET', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login');
-    //if your planning to post on this controller, duplicate the route and use POST as first param
-    $this->router->map('POST', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login_post');
+    $this->router->map('GET|POST', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login');
     $this->router->map('GET', '/'.PROJECT_NAME.'/logout', 'user/logout', 'user_logout');
     $this->router->map('GET', '/'.PROJECT_NAME.'/loginfb/[a:fb]?', 'user/loginfb', 'user_loginfb');
     $this->router->map('GET', '/'.PROJECT_NAME.'/profil', 'user/profil', 'user_profil');
-
+    
     //admin
     $this->router->map('GET', '/'.PROJECT_NAME.'/admin', 'admin/index', 'admin_index');
-    $this->router->map('GET', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations');
-    $this->router->map('POST', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations_post');
-    $this->router->map('GET', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users');
-    $this->router->map('POST', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users_post');
+    $this->router->map('GET|POST', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations');
+    $this->router->map('GET|POST', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users');
     $this->router->map('GET', '/'.PROJECT_NAME.'/admin/relog', 'admin/relog', 'admin_relog');
 }
 ```
 
-### Use rooting
+### Use routing
 
 ```php
 //for exemple, a login button, url generated will be /PROJECT_NAME/login and will call *UserController* and method *login()*
-<a href="<?= $this->router->generate('user_login') ?>" class="btn btn-success ml-1">Login</a>
+<a href="<?= $this->url('user_login') ?>" class="btn btn-success ml-1">Login</a>
 ```
 
 More informations about AltoRouter
@@ -159,13 +155,13 @@ You can use the translation system integrated, available on http://localhost/you
 Use the translation() function in your view.
 
 ```php
-<h2 class="center"><?= $this->twig->translation('home.index.title') ?></h2>
+<h2 class="center"><?= $this->translation('home.index.title') ?></h2>
 ```
 
 You can also use parameters on the translations function. Just add an array with the name of yours parameters.
 
 ```php
-<h2 class="center"><?= $this->twig->translation('home.index.title', ['param1' => $str]) ?></h2>
+<h2 class="center"><?= $this->translation('home.index.title', ['param1' => $str]) ?></h2>
 ```
 
 Your trad chain « home.index.title » must contain the value « %param1% » 
@@ -234,22 +230,22 @@ public function findTranslation($name)
 }
 ```
 
-#### Services
+#### Services and Managers
 
-The class Service is in **App/Services/Service.php**
+Just extends the BaseServices class on your new service or manager in **App/{Services/Manager}**
 
-Just extends the Service class on your new service in **App/Services/**
-
-To call a service in a controller, you just have to
+To call a service/manager in a controller, you just have to
 
 ```php
 $this->services->getService('facebook');
+$this->services->getManager('translations');
 ```
 
 Or in another service 
 
 ```php
 $this->getService('facebook');
+$this->getManager('translations');
 ```
 
 Example :
@@ -258,9 +254,12 @@ Example :
 
 namespace App\Services;
 
+use Core\Config\BaseServices;
 use Core\Services\Services;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookSDKException;
 
-class FacebookService extends Service
+class FacebookService extends BaseServices
 {
 
     private $fb;
@@ -282,7 +281,7 @@ class FacebookService extends Service
             //'default_access_token' => '{access-token}', // optional
         ]);
         $this->helper = $this->fb->getRedirectLoginHelper();
-        $this->mj = $this->services->getService('mailjet');
+        $this->mj = $this->getService('mailjet');
     }
 
     public function getProfilFacebook()
@@ -300,4 +299,18 @@ class FacebookService extends Service
         }
     }
 }
+```
+
+It work the same way for your managers.
+
+To call a manager in a controller, you just have to
+
+```php
+$this->services->getManager('translations');
+```
+
+Or in another service 
+
+```php
+$this->getManager('translations');
 ```

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace Core\Config;
 
 use Core\Services\Services;
 use Doctrine\ORM\EntityRepository;

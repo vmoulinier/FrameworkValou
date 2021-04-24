@@ -1,1 +1,1 @@
-<h3 class="center"><?= $this->twig->translation('page.404') ?></h3>
+<h3 class="center"><?= $this->translation('page.404') ?></h3>
