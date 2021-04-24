@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
+use Core\Config\BaseServices;
 use Core\Services\Services;
 
-class AdminService extends Service
+class AdminService extends BaseServices
 {
 
     /**

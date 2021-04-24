@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Manager;
 
 use Core\Config\BaseServices;
 use App\Entity\Translations;
 
-class TranslationsService extends BaseServices
+class TranslationsManager extends BaseServices
 {
     public function updateTranslation(int $id, string $name, string $fr, string $en): void
     {

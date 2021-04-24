@@ -8,13 +8,13 @@ class AdminController extends Controller
 {
     public function __construct(\AltoRouter $router)
     {
+        parent::__construct($router);
         //if is not logged admin, then acces denied in env prod
         if (ENV === 'prod') {
             if(!$this->twig->loggedAdmin()){
                 $this->denied();
             }
         }
-        parent::__construct($router);
     }
 
     public function index()
@@ -26,7 +26,7 @@ class AdminController extends Controller
     public function translations()
     {
         if('POST' === $this->request->getMethod()) {
-            $translationsService = $this->services->getService('translations');
+            $translationsManager = $this->services->getManager('translations');
             $id = $this->request->get('id');
             $id_delete = $this->request->get('id_delete');
             $search = $this->request->get('search');
@@ -35,18 +35,18 @@ class AdminController extends Controller
                 $name = $this->request->get('name');
                 $fr = $this->request->get('fr');
                 $en = $this->request->get('en');
-                $translationsService->updateTranslation($id, $name, $fr, $en);
+                $translationsManager->updateTranslation($id, $name, $fr, $en);
             }
 
             if($this->request->get('add')) {
                 $name = $this->request->get('name');
                 $fr = $this->request->get('fr');
                 $en = $this->request->get('en');
-                $translationsService->addTranslation($name, $fr, $en);
+                $translationsManager->addTranslation($name, $fr, $en);
             }
 
             if($id_delete) {
-                $translationsService->removeTranslation($id_delete);
+                $translationsManager->removeTranslation($id_delete);
             }
 
             if($search) {

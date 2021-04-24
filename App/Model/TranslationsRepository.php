@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Core\Config\Repository;
+
 class TranslationsRepository extends Repository
 {
     public function findTranslation(string $name): array

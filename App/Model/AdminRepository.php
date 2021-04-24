@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Core\Config\Repository;
+
 class AdminRepository extends Repository
 {
     public function login(int $id): void

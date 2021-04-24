@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
+use Core\Config\BaseServices;
 use Mailjet\Client;
 use Mailjet\Resources;
 
-class MailjetService extends Service
+class MailjetService extends BaseServices
 {
-
     public function sendMail(string $to, string $subject, string $htmlPart): void
     {
         $body = [
@@ -28,7 +28,7 @@ class MailjetService extends Service
         $this->getMalilJet()->post(Resources::$Email, ['body' => $body]);
     }
 
-    public function getMalilJet()
+    public function getMalilJet(): Client
     {
         return new Client(MJ_APIKEY_PUBLIC, MJ_APIKEY_PRIVATE, true,['version' => 'v3.1']);
     }

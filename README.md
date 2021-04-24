@@ -33,7 +33,7 @@ define('DEFAULT_LANGAGE', 'en');
 # How it work
 
 ## Routing
-### Configure rooting
+### Configure routing
 
 **Core/Config/Router.php**
 
@@ -69,7 +69,7 @@ public function routing()
 }
 ```
 
-### Use rooting
+### Use routing
 
 ```php
 //for exemple, a login button, url generated will be /PROJECT_NAME/login and will call *UserController* and method *login()*
@@ -234,22 +234,22 @@ public function findTranslation($name)
 }
 ```
 
-#### Services
+#### Services and Managers
 
-The class Service is in **App/Services/Service.php**
+Just extends the BaseServices class on your new service or manager in **App/{Services/Manager}**
 
-Just extends the Service class on your new service in **App/Services/**
-
-To call a service in a controller, you just have to
+To call a service/manager in a controller, you just have to
 
 ```php
 $this->services->getService('facebook');
+$this->services->getManager('translations');
 ```
 
 Or in another service 
 
 ```php
 $this->getService('facebook');
+$this->getManager('translations');
 ```
 
 Example :
@@ -258,9 +258,12 @@ Example :
 
 namespace App\Services;
 
+use Core\Config\BaseServices;
 use Core\Services\Services;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookSDKException;
 
-class FacebookService extends Service
+class FacebookService extends BaseServices
 {
 
     private $fb;
@@ -282,7 +285,7 @@ class FacebookService extends Service
             //'default_access_token' => '{access-token}', // optional
         ]);
         $this->helper = $this->fb->getRedirectLoginHelper();
-        $this->mj = $this->services->getService('mailjet');
+        $this->mj = $this->getService('mailjet');
     }
 
     public function getProfilFacebook()
@@ -300,4 +303,18 @@ class FacebookService extends Service
         }
     }
 }
+```
+
+It work the same way for your managers.
+
+To call a manager in a controller, you just have to
+
+```php
+$this->services->getManager('translations');
+```
+
+Or in another service 
+
+```php
+$this->getManager('translations');
 ```

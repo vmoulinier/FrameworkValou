@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use Core\Config\BaseServices;
 use Core\Services\Services;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookSDKException;
 
-class FacebookService extends Service
+class FacebookService extends BaseServices
 {
 
     private $fb;
@@ -26,7 +29,7 @@ class FacebookService extends Service
             //'default_access_token' => '{access-token}', // optional
         ]);
         $this->helper = $this->fb->getRedirectLoginHelper();
-        $this->mj = $this->services->getService('mailjet');
+        $this->mj = $this->getService('mailjet');
     }
 
     public function getProfilFacebook()

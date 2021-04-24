@@ -3,7 +3,7 @@
 namespace Core\Controller;
 
 use App\Entity\User;
-use App\Model\Repository;
+use Core\Config\Repository;
 use Core\Services\Services;
 use Core\Services\Twig;
 use Symfony\Component\HttpFoundation\Request;
