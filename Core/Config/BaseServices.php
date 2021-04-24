@@ -2,7 +2,7 @@
 
 namespace Core\Config;
 
-use Core\Config\Repository;
+use Core\Config\BaseRepository;
 use Core\Services\Services;
 use Doctrine\ORM\EntityManager;
 
@@ -33,7 +33,7 @@ class BaseServices
         return $this->services->getManager($name);
     }
 
-    public function getRepository(string $entity): Repository
+    public function getRepository(string $entity): BaseRepository
     {
         return $this->services->getRepository($entity);
     }

@@ -5,7 +5,7 @@ namespace Core\Config;
 use Core\Services\Services;
 use Doctrine\ORM\EntityRepository;
 
-class Repository
+class BaseRepository
 {
     protected $entityManager;
 
