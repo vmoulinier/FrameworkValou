@@ -2,10 +2,10 @@
 
 namespace App\Model;
 
-use Core\Config\Repository;
+use Core\Config\BaseRepository;
 use App\Entity\User;
 
-class UserRepository extends Repository
+class UserRepository extends BaseRepository
 {
     public function register(string $email, string $password, string $password_verif, string $name, string $firstname, string $facebook = null): array
     {

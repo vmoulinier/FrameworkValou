@@ -2,7 +2,7 @@
 
 namespace Core\Services;
 
-use Core\Config\Repository;
+use Core\Config\BaseRepository;
 use Core\Config\BaseServices;
 use Core\Config\Config;
 use Doctrine\ORM\EntityManager;
@@ -11,7 +11,7 @@ require_once 'Core/Config/Config.php';
 
 class Services extends Config
 {
-    public function getRepository($entity): Repository
+    public function getRepository($entity): BaseRepository
     {
         if(class_exists('\App\Model\\' . ucfirst($entity) . 'Repository')) {
             $repository = '\App\Model\\' . ucfirst($entity) . 'Repository';

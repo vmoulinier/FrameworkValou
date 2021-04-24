@@ -2,9 +2,9 @@
 
 namespace App\Model;
 
-use Core\Config\Repository;
+use Core\Config\BaseRepository;
 
-class AdminRepository extends Repository
+class AdminRepository extends BaseRepository
 {
     public function login(int $id): void
     {

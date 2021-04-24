@@ -3,7 +3,6 @@
 namespace Core\Controller;
 
 use App\Entity\User;
-use Core\Config\Repository;
 use Core\Services\Services;
 use Core\Services\Twig;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +12,6 @@ class Controller {
     protected $path;
     protected $template;
     protected $title;
-    protected $repository;
     protected $services;
     protected $twig;
     protected $flashBag = [];
